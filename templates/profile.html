@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_student %}
+        <p>You are student</p>
+    {% else %}
+        <p>You are teacher</p>
+        {% if user.is_headteacher %}
+            <a href="{% url 'thanks' %}">Add</a>
+            {% block add_school_users %}
+            {% endblock %}
+        {% endif %}
+    {% endif %}
+    <a href="{% url 'logout' %}">Log out</a>
+{% endblock %}
