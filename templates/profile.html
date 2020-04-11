@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
     {% if user.is_student %}
-        <p>You are student</p>
-    {% else %}
-        <p>You are teacher</p>
+        <p>Hola {{ user.first_name }}</p>
+    {% elif user.is_teacher%}
+        <p>Hola {{ user.first_name }}</p>
         {% if user.is_headteacher %}
-            <a href="{% url 'thanks' %}">Add</a>
             {% block add_school_users %}
+            <a href="{% url 'upload' %}">Add</a>
+
             {% endblock %}
         {% endif %}
     {% endif %}

@@ -52,3 +52,7 @@ class UserChangeForm(forms.ModelForm):
         # This is done here, rather than on the field, because the
         # field does not have access to the initial value
         return self.initial["password"]
+
+
+class FileUploadForm(forms.Form):
+    file_field = forms.FileField()

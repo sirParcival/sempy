@@ -3,15 +3,7 @@ from django.db import models
 
 
 # Create your models here.
-# todo |create
-#  | school model
-#  | teacher model
-#  | student model
-#  | sign up request
-#  | login form
-#  | login.html
-#  | profile.html
-#   | create teacher && student form in headteacher profile: upload file, parse it, preview, download usernames and
+#  todo | create teacher && student form in headteacher profile: upload file, parse it, preview, download usernames and
 #   passwords
 #
 #
