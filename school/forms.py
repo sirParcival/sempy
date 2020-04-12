@@ -55,4 +55,9 @@ class UserChangeForm(forms.ModelForm):
 
 
 class FileUploadForm(forms.Form):
+    choices = [
+        ('teacher', 'Teacher'),
+        ('student', 'Student')
+    ]
     file_field = forms.FileField()
+    radio = forms.ChoiceField(choices=choices, widget=forms.RadioSelect, initial='teacher')

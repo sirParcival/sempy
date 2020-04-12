@@ -37,8 +37,11 @@ class FileField(generic.FormView):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         file = self.request.FILES['file_field']
+        choice = self.request.POST['radio']
         if form.is_valid():
-            with open('files/generated_for_{}.csv'.format(self.request.user.username), 'wb') as new_file:
+            with open('files/generated_for_{}.csv'.format(self.request.user.username), 'w') as des_file:
+                des_file.write(choice+',')
+            with open('files/generated_for_{}.csv'.format(self.request.user.username), 'ab') as new_file:
                 for chunk in file.chunks():
                     new_file.write(chunk)
             return self.form_valid(form)
@@ -64,11 +67,17 @@ class Checkout(generic.CreateView):
                 user_writer = csv.writer(result_file, delimiter=',')
                 first_name_index = 0
                 last_name_index = 0
+                is_teacher = False
+                is_student = False
                 for line, row in enumerate(csv_reader):
 
                     if line == 0:
-                        first_name_index = row.index('first_name')
-                        last_name_index = row.index('last_name')
+                        first_name_index = row.index('first_name')-1
+                        last_name_index = row.index('last_name')-1
+                        if 'student' in row:
+                            is_student = True
+                        else:
+                            is_teacher = True
                     else:
                         first_name = row[first_name_index]
                         last_name = row[last_name_index]
@@ -76,9 +85,12 @@ class Checkout(generic.CreateView):
                         alphabet = string.ascii_letters + string.digits
                         password = ''.join(secrets.choice(alphabet) for i in range(16))
                         school = self.request.user.school
-                        new_user = SchoolUser.objects.create_user(username=username, name=first_name, surname=last_name,
-                                                                  school=school, is_teacher=True, is_headteacher=False,
-                                                                  is_student=False,
+                        new_user = SchoolUser.objects.create_user(username=username,
+                                                                  name=first_name, surname=last_name,
+                                                                  school=school,
+                                                                  is_teacher=is_teacher,
+                                                                  is_headteacher=False,
+                                                                  is_student=is_student,
                                                                   password=password)
                         new_user.save()
                         user_writer.writerow([first_name, last_name, username, password])

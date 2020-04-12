@@ -1,4 +1,5 @@
 {% extends 'profile.html' %}
+
 {% block add_school_users %}
-    <h2>All done.</h2>
+    <a href="/files/result_for_{{ user.username }}.csv" download="usernames.csv"> Download</a>
 {% endblock %}

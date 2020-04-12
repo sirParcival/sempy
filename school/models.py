@@ -30,12 +30,12 @@ class SchoolUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, name, surname, password=None):
+    def create_superuser(self, username, password=None):
         user = self.create_user(
             username,
             school=None,
-            name=name,
-            surname=surname,
+            name='',
+            surname='',
             is_headteacher=False,
             is_student=False,
             is_teacher=False,
