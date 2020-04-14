@@ -3,13 +3,18 @@ from django.db import models
 
 
 # Create your models here.
-#  todo | create teacher && student form in headteacher profile: upload file, parse it, preview, download usernames and
-#   passwords
-#
-#
+
 
 class School(models.Model):
     name = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.name
+
+
+class SchoolingGroup(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    school = models.ForeignKey(School, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -54,6 +59,9 @@ class SchoolUser(AbstractBaseUser):
     is_headteacher = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
+    were_logged_in = models.BooleanField(default=False)
+
+    groups = models.ManyToManyField(SchoolingGroup)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

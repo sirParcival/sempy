@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from school.models import SignUpRequestModel, SchoolUser
+from school.models import SignUpRequestModel, SchoolUser, SchoolingGroup
 
 
 class SignUpRequestForm(forms.ModelForm):
@@ -44,7 +44,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = SchoolUser
-        fields = ('username',  'password', 'first_name', 'last_name', 'is_headteacher', 'is_student', 'is_teacher',
+        fields = ('username', 'password', 'first_name', 'last_name', 'is_headteacher', 'is_student', 'is_teacher',
                   'is_active',)
 
     def clean_password(self):
@@ -61,3 +61,9 @@ class FileUploadForm(forms.Form):
     ]
     file_field = forms.FileField()
     radio = forms.ChoiceField(choices=choices, widget=forms.RadioSelect, initial='teacher')
+
+
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = SchoolingGroup
+        fields = ('name', )

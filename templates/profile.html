@@ -1,15 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
     {% if user.is_student %}
-        <p>Hola {{ user.first_name }}</p>
-    {% elif user.is_teacher%}
-        <p>Hola {{ user.first_name }}</p>
-        {% if user.is_headteacher %}
-            {% block add_school_users %}
-            <a href="{% url 'upload' %}">Add</a>
 
-            {% endblock %}
-        {% endif %}
+        <p>Hola student {{ user.first_name }}</p>
+    {% elif user.is_teacher%}
+            <p>Hola teacher {{ user.first_name }}</p>
+            {% if user.is_headteacher %}
+                {% block add_school_users %}
+                <a href="{% url 'upload' %}">Add</a>
+
+                {% endblock %}
+            {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Add group"/>
+        </form>
+            <ul>
+            {% for group in groups %}
+                <li>{{ group }}</li>
+            {% endfor %}
+
+            </ul>
+
+
     {% endif %}
+    <ul>
+    {% for school_group in school_groups %}
+        <li>{{ school_group }}</li>
+    {% endfor %}
+
+    </ul>
     <a href="{% url 'logout' %}">Log out</a>
 {% endblock %}

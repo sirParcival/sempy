@@ -1,13 +1,31 @@
-from django.shortcuts import render
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from .forms import SignUpRequestForm, FileUploadForm
+from .forms import SignUpRequestForm, FileUploadForm, GroupForm
 from django.views import generic
 import csv
 import secrets
 import string
 
 # Create your views here.
-from .models import SchoolUser
+from .models import SchoolUser, SchoolingGroup
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/change_password.html', {'form': form})
 
 
 class HomeView(generic.TemplateView):
@@ -24,8 +42,34 @@ class ThanksView(generic.TemplateView):
     template_name = 'thanks.html'
 
 
-class ProfileView(generic.TemplateView):
-    template_name = 'profile.html'
+class ProfileView(generic.View):
+    form_class = GroupForm
+    all_groups = SchoolingGroup.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            'form': self.form_class,
+            'groups': self.request.user.groups.all(),
+            'school_groups': self.all_groups
+        }
+        if not self.request.user.were_logged_in:
+            self.request.user.were_logged_in = True
+            self.request.user.save()
+            return redirect('change_password')
+        else:
+            return render(request, 'profile.html', context)
+
+    def post(self, request, *args, **kwargs):
+        group_name = self.request.POST['name']
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            new_group = SchoolingGroup.objects.create(name=group_name, school=self.request.user.school)
+            new_group.save()
+            self.request.user.groups.add(new_group)
+            self.request.user.save()
+            return redirect('profile')
+        else:
+            return redirect('profile')
 
 
 class FileField(generic.FormView):
@@ -40,7 +84,7 @@ class FileField(generic.FormView):
         choice = self.request.POST['radio']
         if form.is_valid():
             with open('files/generated_for_{}.csv'.format(self.request.user.username), 'w') as des_file:
-                des_file.write(choice+',')
+                des_file.write(choice + ',')
             with open('files/generated_for_{}.csv'.format(self.request.user.username), 'ab') as new_file:
                 for chunk in file.chunks():
                     new_file.write(chunk)
@@ -72,8 +116,8 @@ class Checkout(generic.CreateView):
                 for line, row in enumerate(csv_reader):
 
                     if line == 0:
-                        first_name_index = row.index('first_name')-1
-                        last_name_index = row.index('last_name')-1
+                        first_name_index = row.index('first_name') - 1
+                        last_name_index = row.index('last_name') - 1
                         if 'student' in row:
                             is_student = True
                         else:
