@@ -1,6 +1,7 @@
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from .forms import SignUpRequestForm, FileUploadForm, GroupForm
@@ -10,7 +11,7 @@ import secrets
 import string
 
 # Create your views here.
-from .models import SchoolUser, SchoolingGroup
+from .models import SchoolUser, SchoolingGroup, AddToGroupRequest
 
 
 def change_password(request):
@@ -28,6 +29,26 @@ def change_password(request):
     return render(request, 'registration/change_password.html', {'form': form})
 
 
+def add_user_to_group(request, **kwargs):
+    group_request_id = kwargs['pk']
+    group_request = AddToGroupRequest.objects.get(id=group_request_id)
+    group = SchoolingGroup.objects.get(id=group_request.to_group.pk)
+    user = SchoolUser.objects.get(username=group_request.user)
+    user.groups.add(group)
+    user.save()
+    group_request.delete()
+    data = {'is_ok': True}
+    return JsonResponse(data)
+
+
+def decline_request(request, **kwargs):
+    group_request_id = kwargs['pk']
+    group_request = AddToGroupRequest.objects.get(id=group_request_id)
+    group_request.delete()
+    data = {'is_ok': True}
+    return JsonResponse(data)
+
+
 class HomeView(generic.TemplateView):
     template_name = 'index.html'
 
@@ -42,16 +63,41 @@ class ThanksView(generic.TemplateView):
     template_name = 'thanks.html'
 
 
-class ProfileView(generic.View):
-    form_class = GroupForm
-    all_groups = SchoolingGroup.objects.all()
+class GroupDetail(generic.View):
+    school_users = SchoolUser.objects.all()
 
     def get(self, request, *args, **kwargs):
+        users = self.school_users.filter(groups=kwargs['pk'])
+        context = {
+            'school_users': users,
+            'group_name': kwargs['name']
+        }
+        return render(request, 'group.html', context)
+
+    def post(self, request, *args, **kwargs):
+        new_request = AddToGroupRequest.objects.create(
+            full_name=f'{self.request.user.first_name} {self.request.user.last_name}',
+            user=self.request.user.username,
+            to_user=SchoolUser.objects.get(id=kwargs['creator_id']),
+            to_group=SchoolingGroup.objects.get(id=kwargs['pk'])
+        )
+        new_request.save()
+        return redirect('profile')
+
+
+class ProfileView(generic.View):
+    form_class = GroupForm
+
+    def get(self, request, *args, **kwargs):
+        all_groups = SchoolingGroup.objects.filter(school=self.request.user.school)
+        group_request = AddToGroupRequest.objects.filter(to_user=self.request.user)
         context = {
             'form': self.form_class,
             'groups': self.request.user.groups.all(),
-            'school_groups': self.all_groups
+            'school_groups': all_groups.filter,
         }
+        if group_request:
+            context['group_requests'] = group_request
         if not self.request.user.were_logged_in:
             self.request.user.were_logged_in = True
             self.request.user.save()
@@ -60,14 +106,18 @@ class ProfileView(generic.View):
             return render(request, 'profile.html', context)
 
     def post(self, request, *args, **kwargs):
-        group_name = self.request.POST['name']
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            new_group = SchoolingGroup.objects.create(name=group_name, school=self.request.user.school)
-            new_group.save()
-            self.request.user.groups.add(new_group)
-            self.request.user.save()
-            return redirect('profile')
+        if self.request.POST['name']:
+            group_name = self.request.POST['name']
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                new_group = SchoolingGroup.objects.create(name=group_name, school=self.request.user.school,
+                                                          creator=self.request.user)
+                new_group.save()
+                self.request.user.groups.add(new_group)
+                self.request.user.save()
+                return redirect('profile')
+            else:
+                return redirect('profile')
         else:
             return redirect('profile')
 
