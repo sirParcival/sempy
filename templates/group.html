@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <p>{{ group_name }}</p>
+    <ul>
+    {% for school_user in school_users %}
+        <li>{{ school_user.first_name }} {{ school_user.last_name }}</li>
+    {% endfor %}
+    {% if user not in school_users %}
+        <form method="post">
+                {% csrf_token %}
+                <input type="submit" value="Add me"/>
+            </form>
+    {% endif %}
+
+
+    </ul>
+{% endblock %}

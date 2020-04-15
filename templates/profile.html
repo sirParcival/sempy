@@ -1,35 +1,88 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     {% if user.is_student %}
 
         <p>Hola student {{ user.first_name }}</p>
+
+
+
+
+
     {% elif user.is_teacher%}
+
+
+
+
             <p>Hola teacher {{ user.first_name }}</p>
+
+
             {% if user.is_headteacher %}
                 {% block add_school_users %}
                 <a href="{% url 'upload' %}">Add</a>
 
                 {% endblock %}
             {% endif %}
-        <form method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Add group"/>
-        </form>
-            <ul>
-            {% for group in groups %}
-                <li>{{ group }}</li>
-            {% endfor %}
 
-            </ul>
+        {% block my_group %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Add group"/>
+            </form>
+
+        {% endblock %}
+
+        <div class="my_groups">
+            {% for group_request in group_requests %}
+            <li>{{ group_request }}</li>
+            <button id="add_user_to_group" formaction="{% url 'add' group_request.id%}">Add</button>
+            <button id="decline_user_request" formaction="{% url 'decline' group_request.id%}">Decline</button>
+            <script src="{% static 'javascript/add_or_decline.js' %}"></script>
+            {% endfor %}
+        </div>
+
 
 
     {% endif %}
     <ul>
-    {% for school_group in school_groups %}
-        <li>{{ school_group }}</li>
+    {% for group in groups %}
+        <li>
+            <a href="{% url 'group_detailed_view' group.name group.id group.creator.id%}">
+                {{ group }}
+            </a>
+        </li>
+
     {% endfor %}
 
     </ul>
+    <ul>
+    {% for school_group in school_groups %}
+        <li>
+            <a href="{% url 'group_detailed_view' school_group.name school_group.id school_group.creator.id %}">
+                {{ school_group }}
+            </a>
+        </li>
+    {% endfor %}
+
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <a href="{% url 'logout' %}">Log out</a>
 {% endblock %}

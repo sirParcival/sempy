@@ -12,14 +12,6 @@ class School(models.Model):
         return self.name
 
 
-class SchoolingGroup(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    school = models.ForeignKey(School, on_delete=models.CASCADE, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
 class SchoolUserManager(BaseUserManager):
     def create_user(self, username, name, surname, school, is_headteacher, is_teacher, is_student, password=None):
         user = self.model(
@@ -51,6 +43,15 @@ class SchoolUserManager(BaseUserManager):
         return user
 
 
+class SchoolingGroup(models.Model):
+    name = models.CharField(max_length=50)
+    school = models.ForeignKey(School, on_delete=models.CASCADE, null=True, blank=True)
+    creator = models.ForeignKey('SchoolUser', on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class SchoolUser(AbstractBaseUser):
     username = models.CharField(max_length=50, unique=True)
     first_name = models.CharField(max_length=50, default="")
@@ -61,7 +62,7 @@ class SchoolUser(AbstractBaseUser):
     is_student = models.BooleanField(default=False)
     were_logged_in = models.BooleanField(default=False)
 
-    groups = models.ManyToManyField(SchoolingGroup)
+    groups = models.ManyToManyField(SchoolingGroup, blank=True)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -101,3 +102,13 @@ class SignUpRequestModel(models.Model):
 
     def __str__(self):
         return "Request from " + self.name
+
+
+class AddToGroupRequest(models.Model):
+    full_name = models.CharField(max_length=150)
+    user = models.CharField(max_length=150)
+    to_user = models.ForeignKey(SchoolUser, on_delete=models.CASCADE, null=True, blank=True)
+    to_group = models.ForeignKey(SchoolingGroup, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return f'Got new request form {self.full_name}'

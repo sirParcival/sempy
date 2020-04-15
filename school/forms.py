@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from school.models import SignUpRequestModel, SchoolUser, SchoolingGroup
+from school.models import SignUpRequestModel, SchoolUser, SchoolingGroup, AddToGroupRequest
 
 
 class SignUpRequestForm(forms.ModelForm):
@@ -66,4 +66,5 @@ class FileUploadForm(forms.Form):
 class GroupForm(forms.ModelForm):
     class Meta:
         model = SchoolingGroup
-        fields = ('name', )
+        fields = ('name',)
+
