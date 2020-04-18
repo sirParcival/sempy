@@ -30,14 +30,18 @@ def change_password(request):
 
 
 def add_user_to_group(request, **kwargs):
-    group_request_id = kwargs['pk']
-    group_request = AddToGroupRequest.objects.get(id=group_request_id)
-    group = SchoolingGroup.objects.get(id=group_request.to_group.pk)
-    user = SchoolUser.objects.get(username=group_request.user)
-    user.groups.add(group)
-    user.save()
-    group_request.delete()
-    data = {'is_ok': True}
+    data = {
+        'is_ok': True
+    }
+    if request.is_ajax():
+        group_request_id = kwargs['pk']
+        group_request = AddToGroupRequest.objects.get(id=group_request_id)
+        group = SchoolingGroup.objects.get(id=group_request.to_group.pk)
+        user = SchoolUser.objects.get(username=group_request.user)
+        user.groups.add(group)
+        user.save()
+
+        group_request.delete()
     return JsonResponse(data)
 
 
@@ -45,7 +49,28 @@ def decline_request(request, **kwargs):
     group_request_id = kwargs['pk']
     group_request = AddToGroupRequest.objects.get(id=group_request_id)
     group_request.delete()
-    data = {'is_ok': True}
+    return JsonResponse({"is_ok": True})
+
+
+def delete_group(request, **kwargs):
+    group_id = kwargs['pk']
+    group = SchoolingGroup.objects.get(id=group_id)
+    group.delete()
+    return JsonResponse({'is_rename': False})
+
+
+def edit_group_name(request, **kwargs):
+    data = {
+        "is_rename": True
+    }
+
+    if request.is_ajax():
+        new_name = request.GET.get('new_name', None)
+        group = SchoolingGroup.objects.get(pk=kwargs['pk'])
+        group.name = new_name
+        group.save()
+        data.update(text=new_name)
+
     return JsonResponse(data)
 
 

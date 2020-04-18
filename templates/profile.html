@@ -6,12 +6,7 @@
         <p>Hola student {{ user.first_name }}</p>
 
 
-
-
-
     {% elif user.is_teacher%}
-
-
 
 
             <p>Hola teacher {{ user.first_name }}</p>
@@ -25,6 +20,7 @@
             {% endif %}
 
         {% block my_group %}
+            <p>Please make sure you are using only letters or digits and signs "_", "-"</p>
             <form method="post">
                 {% csrf_token %}
                 {{ form }}
@@ -34,28 +30,49 @@
         {% endblock %}
 
         <div class="my_groups">
-            {% for group_request in group_requests %}
-            <li>{{ group_request }}</li>
-            <button id="add_user_to_group" formaction="{% url 'add' group_request.id%}">Add</button>
-            <button id="decline_user_request" formaction="{% url 'decline' group_request.id%}">Decline</button>
-            <script src="{% static 'javascript/add_or_decline.js' %}"></script>
-            {% endfor %}
+            <ul>
+                {% for group_request in group_requests %}
+                        <li class="group_request">{{ group_request }} to {{ group_request.to_group.name }}
+                            <form>
+                                <button class="handle_request" formaction="{% url 'add' group_request.id%}">Accept</button>
+                                <button class="handle_request" formaction="{% url 'decline' group_request.id%}">Decline</button>
+                            </form>
+                        </li>
+
+
+                {% endfor %}
+            </ul>
+
+
         </div>
 
 
 
+
     {% endif %}
-    <ul>
-    {% for group in groups %}
-        <li>
-            <a href="{% url 'group_detailed_view' group.name group.id group.creator.id%}">
-                {{ group }}
-            </a>
-        </li>
+    <div id="user_groups">
+        <ul>
+        {% for group in groups %}
+            <li>
+                <a href="{% url 'group_detailed_view' group.name group.id group.creator.id%}">
+                    {{ group }}
+                </a>
+                <form>
+                    {% if user.id == group.creator.id %}
+                        <label>
+                    	    <input type="text" placeholder="New name" name="new_name"/>
+                        </label>
+                        <button class="group_handler" formaction="{% url 'edit_group' group.id%}">Edit</button>
+                        <button class="group_handler" formaction="{% url 'delete_group' group.id%}">Delete</button>
+                    {% endif %}
+                </form>
 
-    {% endfor %}
+            </li>
+        {% endfor %}
 
-    </ul>
+        </ul>
+    </div>
+        <script src="{% static 'javascript/group_handler.js' %}"></script>
     <ul>
     {% for school_group in school_groups %}
         <li>
@@ -67,22 +84,9 @@
 
     </ul>
 
+<a href="{% url 'logout' %}">Log out</a>
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <a href="{% url 'logout' %}">Log out</a>
 {% endblock %}

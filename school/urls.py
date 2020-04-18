@@ -13,6 +13,8 @@ from .views import (
     GroupDetail,
     add_user_to_group,
     decline_request,
+    delete_group,
+    edit_group_name
 )
 
 urlpatterns = [
@@ -21,9 +23,11 @@ urlpatterns = [
     path('thanks/', ThanksView.as_view(), name="thanks"),
     path('profile/', ProfileView.as_view(), name="profile"),
     path('profile/upload_users/', FileField.as_view(), name="upload"),
-    path('profile/upload_users/checkout', Checkout.as_view(), name="checkout"),
-    path('profile/change_password', change_password, name='change_password'),
-    path('profile/<slug:name>_<int:pk>_<int:creator_id>', GroupDetail.as_view(), name='group_detailed_view'),
+    path('profile/upload_users/checkout/', Checkout.as_view(), name="checkout"),
+    path('profile/change_password/', change_password, name='change_password'),
+    path('profile/<slug:name>_<int:pk>_<int:creator_id>/', GroupDetail.as_view(), name='group_detailed_view'),
     path('profile/add_<int:pk>', add_user_to_group, name='add'),
-    path('profile/decline_<int:pk>', decline_request, name='decline')
+    path('profile/decline_<int:pk>', decline_request, name='decline'),
+    path('profile/delete_<int:pk>/', delete_group, name='delete_group'),
+    path('profile/edit_<int:pk>/', edit_group_name, name='edit_group'),
 ] + static(settings.FILES_URL, document_root=settings.FILES_ROOT)

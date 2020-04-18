@@ -111,4 +111,4 @@ class AddToGroupRequest(models.Model):
     to_group = models.ForeignKey(SchoolingGroup, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return f'Got new request form {self.full_name}'
+        return f'Got new request from {self.full_name}'
