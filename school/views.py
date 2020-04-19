@@ -78,6 +78,26 @@ class HomeView(generic.TemplateView):
     template_name = 'index.html'
 
 
+class ProfileView(generic.View):
+    template_name = 'profile.html'
+
+    def get(self, request, *args, **kwargs):
+        if not self.request.user.were_logged_in:
+            self.request.user.were_logged_in = True
+            self.request.user.save()
+            return redirect('change_password')
+        return render(self.request, self.template_name)
+
+
+class AllGroupsView(generic.View):
+    def get(self, request, *args, **kwargs):
+        all_groups = SchoolingGroup.objects.filter(school=self.request.user.school)
+        context = {
+            'school_groups': all_groups,
+        }
+        return render(self.request, 'all_groups.html', context)
+
+
 class SignUpRequestView(generic.CreateView):
     form_class = SignUpRequestForm
     success_url = reverse_lazy('thanks')
@@ -110,25 +130,19 @@ class GroupDetail(generic.View):
         return redirect('profile')
 
 
-class ProfileView(generic.View):
+class MyGroupsView(generic.View):
     form_class = GroupForm
 
     def get(self, request, *args, **kwargs):
-        all_groups = SchoolingGroup.objects.filter(school=self.request.user.school)
         group_request = AddToGroupRequest.objects.filter(to_user=self.request.user)
         context = {
             'form': self.form_class,
             'groups': self.request.user.groups.all(),
-            'school_groups': all_groups.filter,
         }
         if group_request:
             context['group_requests'] = group_request
-        if not self.request.user.were_logged_in:
-            self.request.user.were_logged_in = True
-            self.request.user.save()
-            return redirect('change_password')
         else:
-            return render(request, 'profile.html', context)
+            return render(request, 'my_groups.html', context)
 
     def post(self, request, *args, **kwargs):
         if self.request.POST['name']:
@@ -140,11 +154,11 @@ class ProfileView(generic.View):
                 new_group.save()
                 self.request.user.groups.add(new_group)
                 self.request.user.save()
-                return redirect('profile')
+                return redirect('my_groups')
             else:
-                return redirect('profile')
+                return redirect('my_groups')
         else:
-            return redirect('profile')
+            return redirect('my_groups')
 
 
 class FileField(generic.FormView):

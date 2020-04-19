@@ -1,92 +1,54 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
 {% block content %}
-    {% if user.is_student %}
+    {% block left-nav-bar %}
+        <div class="main-container">
+		<div class="container menu">
 
-        <p>Hola student {{ user.first_name }}</p>
+			<nav class="navigation-left">
+				<div class="logo">
+					<h2>Sempy</h2>
+				</div>
+				<div class="user-block-menu">
+					<ul class="user-menu">
+                        {% block menu %}
+                        <li class="user-el-menu active"><a class="nav-link" href="{% url 'profile' %}">Dashboard</a></li>
+						<li class="user-el-menu">Home tasks</li>
+						<li class="user-el-menu">Lectures</li>
+						<li class="user-el-menu">News</li>
+						<li class="user-el-menu"><a href="{% url 'my_groups' %}" class="nav-link">My groups</a></li>
+                        <li class="user-el-menu"><a href="{% url 'all_groups' %}" class="nav-link">All groups</a></li>
+                        {% endblock %}
 
-
-    {% elif user.is_teacher%}
-
-
-            <p>Hola teacher {{ user.first_name }}</p>
-
-
-            {% if user.is_headteacher %}
-                {% block add_school_users %}
-                <a href="{% url 'upload' %}">Add</a>
-
-                {% endblock %}
-            {% endif %}
-
-        {% block my_group %}
-            <p>Please make sure you are using only letters or digits and signs "_", "-"</p>
-            <form method="post">
-                {% csrf_token %}
-                {{ form }}
-                <input type="submit" value="Add group"/>
-            </form>
-
-        {% endblock %}
-
-        <div class="my_groups">
-            <ul>
-                {% for group_request in group_requests %}
-                        <li class="group_request">{{ group_request }} to {{ group_request.to_group.name }}
-                            <form>
-                                <button class="handle_request" formaction="{% url 'add' group_request.id%}">Accept</button>
-                                <button class="handle_request" formaction="{% url 'decline' group_request.id%}">Decline</button>
-                            </form>
-                        </li>
+					</ul>
+				</div>
+			</nav>
+		</div>
 
 
-                {% endfor %}
-            </ul>
+		<div class="container main">
+			<nav class="navigation-top">
+				<div class="user-account-info">
+					<ul class="user-info-list">
+						<li><p>{{user.first_name}}</p></li>
+						<li>{{ user.last_name }}</li>
+						<li>avatar</li>
+                        {% if user.is_headteacher %}
+                            <li><a href="{% url 'upload' %}">Add</a></li>
+                        {% endif %}
 
+					</ul>
+				</div>
+			</nav>
 
-        </div>
+		{% block box-content %}
 
-
-
-
-    {% endif %}
-    <div id="user_groups">
-        <ul>
-        {% for group in groups %}
-            <li>
-                <a href="{% url 'group_detailed_view' group.name group.id group.creator.id%}">
-                    {{ group }}
-                </a>
-                <form>
-                    {% if user.id == group.creator.id %}
-                        <label>
-                    	    <input type="text" placeholder="New name" name="new_name"/>
-                        </label>
-                        <button class="group_handler" formaction="{% url 'edit_group' group.id%}">Edit</button>
-                        <button class="group_handler" formaction="{% url 'delete_group' group.id%}">Delete</button>
-                    {% endif %}
-                </form>
-
-            </li>
-        {% endfor %}
-
-        </ul>
-    </div>
-        <script src="{% static 'javascript/group_handler.js' %}"></script>
-    <ul>
-    {% for school_group in school_groups %}
-        <li>
-            <a href="{% url 'group_detailed_view' school_group.name school_group.id school_group.creator.id %}">
-                {{ school_group }}
-            </a>
-        </li>
-    {% endfor %}
-
-    </ul>
-
-<a href="{% url 'logout' %}">Log out</a>
-
-
-
-
+		{% endblock %}
+		</div>
+	</div>
+    {% endblock %}
 {% endblock %}

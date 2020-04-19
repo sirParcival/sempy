@@ -6,7 +6,7 @@ from .views import (
     HomeView,
     SignUpRequestView,
     ThanksView,
-    ProfileView,
+    MyGroupsView,
     FileField,
     Checkout,
     change_password,
@@ -14,14 +14,16 @@ from .views import (
     add_user_to_group,
     decline_request,
     delete_group,
-    edit_group_name
+    edit_group_name,
+    ProfileView,
+    AllGroupsView,
 )
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name="home"),
     path('signup/', SignUpRequestView.as_view(), name="signup"),
     path('thanks/', ThanksView.as_view(), name="thanks"),
-    path('profile/', ProfileView.as_view(), name="profile"),
+    path('profile/my_groups', MyGroupsView.as_view(), name="my_groups"),
     path('profile/upload_users/', FileField.as_view(), name="upload"),
     path('profile/upload_users/checkout/', Checkout.as_view(), name="checkout"),
     path('profile/change_password/', change_password, name='change_password'),
@@ -30,4 +32,6 @@ urlpatterns = [
     path('profile/decline_<int:pk>', decline_request, name='decline'),
     path('profile/delete_<int:pk>/', delete_group, name='delete_group'),
     path('profile/edit_<int:pk>/', edit_group_name, name='edit_group'),
+    path('profile/', ProfileView.as_view(), name='profile'),
+    path('profile/all_groups/', AllGroupsView.as_view(), name='all_groups')
 ] + static(settings.FILES_URL, document_root=settings.FILES_ROOT)
