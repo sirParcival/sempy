@@ -72,4 +72,4 @@ class GroupForm(forms.ModelForm):
 class CreateLectureForm(forms.ModelForm):
     class Meta:
         model = Lecture
-        exclude = ('group', 'school')
+        exclude = ('group', 'school', 'creator')

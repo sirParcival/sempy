@@ -248,16 +248,19 @@ class LectureCreatorView(generic.View):
         lecture_description = self.request.POST.get('description')
         lecture_subject = self.request.POST.get('subject')
         lecture_link = self.request.POST.get('link')
+        lecture_group = self.request.POST.get('dropdown')
         link = lecture_link.replace('watch?v=', 'embed/')
         files = self.request.FILES.getlist('files')
-        print(files)
         lecture = Lecture.objects.create(
             title=lecture_title, description=lecture_description, subject=lecture_subject, link=link,
-            school=self.request.user.school,
+            school=self.request.user.school, creator=self.request.user
         )
+        if lecture_group != '0':
+            group = SchoolingGroup.objects.get(pk=lecture_group)
+            lecture.group = group
         lecture.save()
         file_path = f'files/lecture{lecture.id}/'
-        os.makedirs(file_path)
+        os.makedirs(file_path, 0o777)
         for file in files:
             with open(file_path+str(file), 'wb+') as file_for_lecture:
                 for chunk in file.chunks():
