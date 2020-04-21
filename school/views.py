@@ -6,14 +6,14 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from .forms import SignUpRequestForm, FileUploadForm, GroupForm, CreateLectureForm
+from .forms import SignUpRequestForm, FileUploadForm, GroupForm, CreateLectureForm, CommentForm
 from django.views import generic
 import csv
 import secrets
 import string
 
 # Create your views here.
-from .models import SchoolUser, SchoolingGroup, AddToGroupRequest, Lecture
+from .models import SchoolUser, SchoolingGroup, AddToGroupRequest, Lecture, CommentToLecture
 
 
 def change_password(request):
@@ -262,7 +262,7 @@ class LectureCreatorView(generic.View):
         file_path = f'files/lecture{lecture.id}/'
         os.makedirs(file_path, 0o777)
         for file in files:
-            with open(file_path+str(file), 'wb+') as file_for_lecture:
+            with open(file_path + str(file), 'wb+') as file_for_lecture:
                 for chunk in file.chunks():
                     file_for_lecture.write(chunk)
 
@@ -282,16 +282,33 @@ class LectureDetailView(generic.View):
     def get(self, request, *args, **kwargs):
         filelinks = []
         lecture = Lecture.objects.get(id=kwargs['pk'])
+        comments = CommentToLecture.objects.filter(lecture=lecture)
         directory = f'files/lecture{lecture.id}/'
+        comments_form = CommentForm
         for file in os.listdir(directory):
             filelinks.append(
                 {
-                    'file_path': directory+file,
+                    'file_path': directory + file,
                     'filename': file
                 }
             )
         context = {
             'lecture': lecture,
-            'files': filelinks
+            'files': filelinks,
+            'comments': comments,
+            'comment_form': comments_form
         }
         return render(self.request, 'lecture_detail.html', context)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        comment = CommentToLecture(
+            comment=self.request.POST['comment'],
+            full_name=self.request.user.first_name + " " + self.request.user.last_name,
+            lecture=Lecture.objects.get(id=kwargs['pk'])
+        )
+        comment.save()
+        data.update(comment=comment.comment, name=comment.full_name)
+        return JsonResponse(data)
+
+

@@ -10,7 +10,7 @@
 
 {% block box-content %}
     {% for lecture in lectures reversed%}
-        {% if lecture.group in user_groups or lecture.group == None%}
+        {% if lecture.group in user_groups or lecture.group == None or lecture.creator == user %}
             <a href="{% url 'lecture' lecture.id%}">{{ lecture.title }}</a>
             <p>{{ lecture.subject }}</p>
         {% endif %}

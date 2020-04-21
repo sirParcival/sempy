@@ -123,3 +123,9 @@ class Lecture(models.Model):
     group = models.ForeignKey(SchoolingGroup, on_delete=models.CASCADE, null=True, blank=True)
 
     link = models.URLField(blank=True, null=True)
+
+
+class CommentToLecture(models.Model):
+    comment = models.TextField()
+    full_name = models.CharField(max_length=150)
+    lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
