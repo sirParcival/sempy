@@ -1,17 +1,19 @@
+import os
+
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from .forms import SignUpRequestForm, FileUploadForm, GroupForm
+from .forms import SignUpRequestForm, FileUploadForm, GroupForm, CreateLectureForm
 from django.views import generic
 import csv
 import secrets
 import string
 
 # Create your views here.
-from .models import SchoolUser, SchoolingGroup, AddToGroupRequest
+from .models import SchoolUser, SchoolingGroup, AddToGroupRequest, Lecture
 
 
 def change_password(request):
@@ -228,3 +230,65 @@ class Checkout(generic.CreateView):
                         new_user.save()
                         user_writer.writerow([first_name, last_name, username, password])
         return render(request, 'checkout.html')
+
+
+class LectureCreatorView(generic.View):
+    template_name = 'lecture_creator.html'
+
+    def get(self, request, *args, **kwargs):
+        form = CreateLectureForm()
+        context = {
+            'form': form,
+            'groups': SchoolingGroup.objects.filter(school=self.request.user.school)
+        }
+        return render(self.request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        lecture_title = self.request.POST.get('title')
+        lecture_description = self.request.POST.get('description')
+        lecture_subject = self.request.POST.get('subject')
+        lecture_link = self.request.POST.get('link')
+        link = lecture_link.replace('watch?v=', 'embed/')
+        files = self.request.FILES.getlist('files')
+        print(files)
+        lecture = Lecture.objects.create(
+            title=lecture_title, description=lecture_description, subject=lecture_subject, link=link,
+            school=self.request.user.school,
+        )
+        lecture.save()
+        file_path = f'files/lecture{lecture.id}/'
+        os.makedirs(file_path)
+        for file in files:
+            with open(file_path+str(file), 'wb+') as file_for_lecture:
+                for chunk in file.chunks():
+                    file_for_lecture.write(chunk)
+
+        return redirect('profile')
+
+
+class LecturesListView(generic.View):
+    def get(self, request, *args, **kwargs):
+        context = {
+            'lectures': Lecture.objects.filter(school=self.request.user.school),
+            'user_groups': self.request.user.groups.all()
+        }
+        return render(self.request, 'all_lectures.html', context)
+
+
+class LectureDetailView(generic.View):
+    def get(self, request, *args, **kwargs):
+        filelinks = []
+        lecture = Lecture.objects.get(id=kwargs['pk'])
+        directory = f'files/lecture{lecture.id}/'
+        for file in os.listdir(directory):
+            filelinks.append(
+                {
+                    'file_path': directory+file,
+                    'filename': file
+                }
+            )
+        context = {
+            'lecture': lecture,
+            'files': filelinks
+        }
+        return render(self.request, 'lecture_detail.html', context)

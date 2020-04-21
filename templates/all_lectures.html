@@ -1,0 +1,20 @@
+{% extends 'profile.html' %}
+{% block menu %}
+<li class="user-el-menu"><a class="nav-link" href="{% url 'profile' %}">Dashboard</a></li>
+<li class="user-el-menu">Home tasks</li>
+<li class="user-el-menu active"><a class="nav-link" href="{% url 'list_lectures'%}">Lectures</a></li>
+<li class="user-el-menu">News</li>
+<li class="user-el-menu"><a href="{% url 'my_groups' %}" class="nav-link">My groups</a></li>
+<li class="user-el-menu"><a href="{% url 'all_groups' %}" class="nav-link">All groups</a></li>
+{% endblock %}
+
+{% block box-content %}
+    {% for lecture in lectures reversed%}
+        {% if lecture.group in user_groups or lecture.group == None%}
+            <a href="{% url 'lecture' lecture.id%}">{{ lecture.title }}</a>
+            <p>{{ lecture.subject }}</p>
+        {% endif %}
+
+    {% endfor %}
+
+{% endblock %}

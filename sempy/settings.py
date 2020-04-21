@@ -119,4 +119,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 FILES_URL = '/files/'
+
 FILES_ROOT = os.path.join(BASE_DIR, 'files')
+
+

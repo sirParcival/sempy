@@ -18,7 +18,7 @@
                         {% block menu %}
                         <li class="user-el-menu active"><a class="nav-link" href="{% url 'profile' %}">Dashboard</a></li>
 						<li class="user-el-menu">Home tasks</li>
-						<li class="user-el-menu">Lectures</li>
+						<li class="user-el-menu"><a class="nav-link" href="{% url 'list_lectures'%}">Lectures</a></li>
 						<li class="user-el-menu">News</li>
 						<li class="user-el-menu"><a href="{% url 'my_groups' %}" class="nav-link">My groups</a></li>
                         <li class="user-el-menu"><a href="{% url 'all_groups' %}" class="nav-link">All groups</a></li>
@@ -33,6 +33,10 @@
 		<div class="container main">
 			<nav class="navigation-top">
 				<div class="user-account-info">
+                {% if user.is_teacher %}
+                <button><a href="{% url 'create_lecture' %}">Add new lecture</a></button>
+                {% endif %}
+
 					<ul class="user-info-list">
 						<li><p>{{user.first_name}}</p></li>
 						<li>{{ user.last_name }}</li>

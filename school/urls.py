@@ -17,6 +17,9 @@ from .views import (
     edit_group_name,
     ProfileView,
     AllGroupsView,
+    LectureCreatorView,
+    LecturesListView,
+    LectureDetailView,
 )
 
 urlpatterns = [
@@ -33,5 +36,8 @@ urlpatterns = [
     path('profile/delete_<int:pk>/', delete_group, name='delete_group'),
     path('profile/edit_<int:pk>/', edit_group_name, name='edit_group'),
     path('profile/', ProfileView.as_view(), name='profile'),
-    path('profile/all_groups/', AllGroupsView.as_view(), name='all_groups')
+    path('profile/all_groups/', AllGroupsView.as_view(), name='all_groups'),
+    path('profile/create_lecture', LectureCreatorView.as_view(), name='create_lecture'),
+    path('profile/all_lectures', LecturesListView.as_view(), name='list_lectures'),
+    path('profile/lecture_<int:pk>', LectureDetailView.as_view(), name='lecture')
 ] + static(settings.FILES_URL, document_root=settings.FILES_ROOT)

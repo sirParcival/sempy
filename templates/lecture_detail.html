@@ -1,0 +1,19 @@
+{% extends 'profile.html' %}
+{% load static %}
+{% block menu %}
+    <a href="{% url 'profile' %}" class="nav-link">Back</a>
+{% endblock %}
+
+{% block box-content %}
+    <h3>{{ lecture.title }}</h3>
+    <p>{{ lecture.subject }}</p>
+    <p>{{ lecture.description }}</p>
+    <iframe width="560" height="315" src="{{ lecture.link }}" frameborder="0" allow="accelerometer;
+    autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    {% for file in files %}
+        <p><a href="/{{ file.file_path }}" download>{{ file.filename }}</a></p>
+    {% endfor %}
+
+
+{% endblock %}

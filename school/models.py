@@ -112,3 +112,13 @@ class AddToGroupRequest(models.Model):
 
     def __str__(self):
         return f'Got new request from {self.full_name}'
+
+
+class Lecture(models.Model):
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    description = models.TextField(max_length=1000, null=True, blank=True)
+    subject = models.CharField(max_length=50)
+    group = models.ForeignKey(SchoolingGroup, on_delete=models.CASCADE, null=True, blank=True)
+
+    link = models.URLField(blank=True, null=True)

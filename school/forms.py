@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-
-from school.models import SignUpRequestModel, SchoolUser, SchoolingGroup, AddToGroupRequest
+from multiupload.fields import MultiFileField
+from school.models import SignUpRequestModel, SchoolUser, SchoolingGroup, Lecture
 
 
 class SignUpRequestForm(forms.ModelForm):
@@ -68,3 +68,8 @@ class GroupForm(forms.ModelForm):
         model = SchoolingGroup
         fields = ('name',)
 
+
+class CreateLectureForm(forms.ModelForm):
+    class Meta:
+        model = Lecture
+        exclude = ('group', 'school')
