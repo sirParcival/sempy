@@ -17,10 +17,10 @@
 					<ul class="user-menu">
                         {% block menu %}
                         <li class="user-el-menu active"><a class="nav-link" href="{% url 'profile' %}">Dashboard</a></li>
-						<li class="user-el-menu">Home tasks</li>
-						<li class="user-el-menu"><a class="nav-link" href="{% url 'list_lectures'%}">Lectures</a></li>
-						<li class="user-el-menu">News</li>
-						<li class="user-el-menu"><a href="{% url 'my_groups' %}" class="nav-link">My groups</a></li>
+                        <li class="user-el-menu"><a href="{% url 'list_tasks' %}" class="nav-link">Home tasks</a></li>
+                        <li class="user-el-menu"><a class="nav-link" href="{% url 'list_lectures'%}">Lectures</a></li>
+                        <li class="user-el-menu">News</li>
+                        <li class="user-el-menu"><a href="{% url 'my_groups' %}" class="nav-link">My groups</a></li>
                         <li class="user-el-menu"><a href="{% url 'all_groups' %}" class="nav-link">All groups</a></li>
                         {% endblock %}
 
@@ -35,6 +35,7 @@
 				<div class="user-account-info">
                 {% if user.is_teacher %}
                 <button><a href="{% url 'create_lecture' %}">Add new lecture</a></button>
+                    <button><a href="{% url 'create_home_task' %}">Add new home task</a></button>
                 {% endif %}
 
 					<ul class="user-info-list">

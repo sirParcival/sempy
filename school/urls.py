@@ -20,6 +20,9 @@ from .views import (
     LectureCreatorView,
     LecturesListView,
     LectureDetailView,
+    HomeTaskCreatorView,
+    TaskDetailView,
+    TaskListView,
 )
 
 urlpatterns = [
@@ -39,5 +42,8 @@ urlpatterns = [
     path('profile/all_groups/', AllGroupsView.as_view(), name='all_groups'),
     path('profile/create_lecture', LectureCreatorView.as_view(), name='create_lecture'),
     path('profile/all_lectures', LecturesListView.as_view(), name='list_lectures'),
-    path('profile/lecture_<int:pk>', LectureDetailView.as_view(), name='lecture')
+    path('profile/lecture_<int:pk>', LectureDetailView.as_view(), name='lecture'),
+    path('profile/create_home_task', HomeTaskCreatorView.as_view(), name='create_home_task'),
+    path('profile/all_tasks', TaskListView.as_view(), name='list_tasks'),
+    path('profile/task_<int:pk>', TaskDetailView.as_view(), name='task')
 ] + static(settings.FILES_URL, document_root=settings.FILES_ROOT)

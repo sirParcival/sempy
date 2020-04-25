@@ -5,17 +5,17 @@
 {% endblock %}
 
 {% block box-content %}
-    <h3>{{ lecture.title }}</h3>
-    <p>{{ lecture.subject }}</p>
-    <p>{{ lecture.description }}</p>
-    <p>{{ lecture.date }}</p>
+    <h3>{{ home_task.title }}</h3>
+    <p>{{ home_task.subject }}</p>
+    <p>{{ home_task.description }}</p>
+    <p>Done to: {{ home_task.date }}</p>
     <iframe width="560" height="315" src="{{ lecture.link }}" frameborder="0" allow="accelerometer;
     autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
     {% for file in files %}
         <p><a href="/{{ file.file_path }}" download>{{ file.filename }}</a></p>
     {% endfor %}
-    <form action="{% url 'lecture'  lecture.id%}">
+    <form action="{% url 'task'  home_task.id%}">
         {% csrf_token %}
         {{ comment_form.as_p }}
         <input type="submit" value="Comment" id="comment_submit" >

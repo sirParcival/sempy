@@ -1,0 +1,20 @@
+{% extends 'profile.html' %}
+{% block menu %}
+<li class="user-el-menu"><a class="nav-link" href="{% url 'profile' %}">Dashboard</a></li>
+<li class="user-el-menu active"><a href="{% url 'list_tasks' %}" class="nav-link">Home tasks</a></li>
+<li class="user-el-menu"><a class="nav-link" href="{% url 'list_lectures'%}">Lectures</a></li>
+<li class="user-el-menu">News</li>
+<li class="user-el-menu"><a href="{% url 'my_groups' %}" class="nav-link">My groups</a></li>
+<li class="user-el-menu"><a href="{% url 'all_groups' %}" class="nav-link">All groups</a></li>
+{% endblock %}
+
+{% block box-content %}
+    {% for task in tasks reversed%}
+        {% if task.group in user_groups or task.group == None or task.creator == user %}
+            <a href="{% url 'task' task.id%}">{{ task.title }}</a>
+            <p>{{ task.subject }}</p>
+        {% endif %}
+
+    {% endfor %}
+
+{% endblock %}

@@ -114,18 +114,19 @@ class AddToGroupRequest(models.Model):
         return f'Got new request from {self.full_name}'
 
 
-class Lecture(models.Model):
+class LectureOrTask(models.Model):
     creator = models.ForeignKey(SchoolUser, on_delete=models.CASCADE)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=1000, null=True, blank=True)
     subject = models.CharField(max_length=50)
     group = models.ForeignKey(SchoolingGroup, on_delete=models.CASCADE, null=True, blank=True)
-
+    date = models.DateField()
     link = models.URLField(blank=True, null=True)
+    is_lecture = models.BooleanField(default=True)
 
 
-class CommentToLecture(models.Model):
+class CommentToLectureOrTask(models.Model):
     comment = models.TextField()
     full_name = models.CharField(max_length=150)
-    lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
+    commenting_object = models.ForeignKey(LectureOrTask, on_delete=models.CASCADE)
