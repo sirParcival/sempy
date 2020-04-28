@@ -23,6 +23,7 @@ from .views import (
     HomeTaskCreatorView,
     TaskDetailView,
     TaskListView,
+    PostCreator
 )
 
 urlpatterns = [
@@ -45,5 +46,6 @@ urlpatterns = [
     path('profile/lecture_<int:pk>', LectureDetailView.as_view(), name='lecture'),
     path('profile/create_home_task', HomeTaskCreatorView.as_view(), name='create_home_task'),
     path('profile/all_tasks', TaskListView.as_view(), name='list_tasks'),
-    path('profile/task_<int:pk>', TaskDetailView.as_view(), name='task')
+    path('profile/task_<int:pk>', TaskDetailView.as_view(), name='task'),
+    path('test_post', PostCreator.as_view(), name='post_creator')
 ] + static(settings.FILES_URL, document_root=settings.FILES_ROOT)

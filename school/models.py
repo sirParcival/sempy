@@ -130,3 +130,14 @@ class CommentToLectureOrTask(models.Model):
     comment = models.TextField()
     full_name = models.CharField(max_length=150)
     commenting_object = models.ForeignKey(LectureOrTask, on_delete=models.CASCADE)
+
+
+class Post(models.Model):
+    post_title = models.CharField(max_length=50)
+    post_description = models.TextField(null=True, blank=True)
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    author = models.ForeignKey(SchoolUser, on_delete=models.CASCADE)
+    group = models.ForeignKey(SchoolingGroup, on_delete=models.CASCADE, null=True, blank=True)
+    for_teachers = models.BooleanField(default=False)
+    for_students = models.BooleanField(default=False)
+    images = models.ImageField(null=True, blank=True)

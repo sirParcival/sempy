@@ -14,7 +14,7 @@ import secrets
 import string
 
 # Create your views here.
-from .models import SchoolUser, SchoolingGroup, AddToGroupRequest, LectureOrTask, CommentToLectureOrTask
+from .models import SchoolUser, SchoolingGroup, AddToGroupRequest, LectureOrTask, CommentToLectureOrTask, Post
 
 
 def change_password(request):
@@ -393,3 +393,42 @@ class TaskDetailView(generic.View):
         return JsonResponse(data)
 
 
+class PostCreator(generic.View):
+    template_name = 'post_creator.html'
+    success_url = 'profile'
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            'groups': SchoolingGroup.objects.filter(school=self.request.user.school)
+        }
+        return render(self.request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        post_title = self.request.POST['title']
+        post_description = self.request.POST['description']
+        post_school = self.request.user.school
+        post_author = self.request.user
+        post_group = self.request.POST['dropdown']
+        post_image = self.request.FILES['image']
+        post_for_students = False
+        post_for_teachers = False
+        context = {
+            'groups': SchoolingGroup.objects.filter(school=self.request.user.school)
+        }
+        if 'teacher' in self.request.POST:
+            post_for_teachers = True
+        if 'student' in self.request.POST:
+            post_for_students = True
+
+        post = Post(
+            post_title=post_title, post_description=post_description, school=post_school, author=post_author,
+            for_students=post_for_students, for_teachers=post_for_teachers,
+        )
+        post.save()
+        file_path = f'files/post{post.id}/'
+        os.makedirs(file_path, 0o777)
+        with open(file_path+str(post_image), 'wb+') as file:
+            for chunk in post_image.chunks():
+                file.write(chunk)
+
+        return render(self.request, self.template_name, context)
