@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from school.models import SignUpRequestModel, SchoolUser, SchoolingGroup, LectureOrTask, \
-    CommentToLectureOrTask
+    CommentToLectureOrTask, Question, Choice
 
 
 class SignUpRequestForm(forms.ModelForm):
@@ -85,3 +85,15 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = CommentToLectureOrTask
         fields = ('comment',)
+
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = '__all__'
+
+
+class ChoiceForm(forms.ModelForm):
+    class Meta:
+        model = Choice
+        fields = ('choice_text',)

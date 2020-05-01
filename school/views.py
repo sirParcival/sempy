@@ -7,14 +7,15 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from .forms import SignUpRequestForm, FileUploadForm, GroupForm, CreateLectureForm, CommentForm, CreateHomeTask
+from .forms import SignUpRequestForm, FileUploadForm, GroupForm, CreateLectureForm, CommentForm, CreateHomeTask, \
+    QuestionForm, ChoiceForm
 from django.views import generic
 import csv
 import secrets
 import string
 
 # Create your views here.
-from .models import SchoolUser, SchoolingGroup, AddToGroupRequest, LectureOrTask, CommentToLectureOrTask, Post
+from .models import SchoolUser, SchoolingGroup, AddToGroupRequest, LectureOrTask, CommentToLectureOrTask, Post, Question
 
 
 def change_password(request):
@@ -424,11 +425,27 @@ class PostCreator(generic.View):
             post_title=post_title, post_description=post_description, school=post_school, author=post_author,
             for_students=post_for_students, for_teachers=post_for_teachers,
         )
+        if post_group != '0':
+            post.group = post_group
         post.save()
         file_path = f'files/post{post.id}/'
         os.makedirs(file_path, 0o777)
-        with open(file_path+str(post_image), 'wb+') as file:
+        with open(file_path + str(post_image), 'wb+') as file:
             for chunk in post_image.chunks():
                 file.write(chunk)
 
         return render(self.request, self.template_name, context)
+
+
+class QuestionView(generic.View):
+    form_class = QuestionForm
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            'form': self.form_class,
+            'choice': ChoiceForm
+        }
+        return render(self.request, 'poll_creator.html', context)
+
+
+

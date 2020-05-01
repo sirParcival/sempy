@@ -1,0 +1,9 @@
+{% extends 'profile.html' %}
+{% block box-content %}
+    <form method="post" id="poll">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {{ choice }}
+    </form>
+{% endblock %}
