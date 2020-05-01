@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'school.apps.SchoolConfig',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'sempy.urls'
@@ -119,7 +121,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 FILES_URL = '/files/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'school/static')
 FILES_ROOT = os.path.join(BASE_DIR, 'files')
 
 
