@@ -1,120 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0e3cd0b2-3cc1-4fef-9008-32a745d953dc" name="Default Changelist" comment="Added School Groups handling">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/school/static/css/select2.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/school/static/javascript/lecture_handler.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/school/static/javascript/select2.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/all_lectures.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/lecture_creator.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/lecture_detail.html" afterDir="false" />
+    <list default="true" id="08869fff-d3d8-4716-b76b-3f2941bafb0f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/85ecb350-5413-4e78-9001-4008897e4f01.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/KaiRu.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sempy.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sempy_dev.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/school/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/school/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/school/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/school/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/school/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/school/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/school/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/school/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/school/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/school/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sempy/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/sempy/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/all_groups.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/all_groups.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/my_groups.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/my_groups.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profile.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="DatabaseView">
-    <option name="SHOW_INTERMEDIATE" value="true" />
-    <option name="GROUP_DATA_SOURCES" value="true" />
-    <option name="GROUP_SCHEMA" value="true" />
-    <option name="GROUP_CONTENTS" value="false" />
-    <option name="SORT_POSITIONED" value="false" />
-    <option name="SHOW_EMPTY_GROUPS" value="false" />
-    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <option name="HIDDEN_KINDS">
-      <set />
-    </option>
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="Django default" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="Django default" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="Django default" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="main: schema" type="981a47c2:SqliteImplModel$Schema" />
-      </path>
-    </expand>
-    <select />
-  </component>
-  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
-    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
-        <option value="Python Script" />
-        <option value="HTML File" />
-        <option value="JavaScript File" />
-        <option value="CSS File" />
+        <option value="Ruslan Kossak &lt;rsnlkssk@gmail.com&gt;" />
       </list>
     </option>
-  </component>
-  <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IgnoredFileRootStore">
-    <option name="generatedRoots">
-      <set>
-        <option value="$PROJECT_DIR$/.idea" />
-      </set>
-    </option>
-  </component>
-  <component name="ProjectId" id="1aA5KbnNji6mtDFXt9JqQVDjd2k" />
+  <component name="ProjectId" id="1bIls96kkOjEoJUsAU0gGggm8NO" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="preferences.toDoOptions" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/school/static" />
-      <recent name="$PROJECT_DIR$/school/static/javascript" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="sempy" type="Python.DjangoServer" factoryName="Django server">
-      <module name="sempy" />
+    <configuration name="sempy_dev" type="Python.DjangoServer" factoryName="Django server">
+      <module name="sempy_dev" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
-        <env name="DJANGO_SETTINGS_MODULE" value="sempy.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
@@ -138,157 +81,38 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="0e3cd0b2-3cc1-4fef-9008-32a745d953dc" name="Default Changelist" comment="" />
-      <created>1586165494222</created>
+      <changelist id="08869fff-d3d8-4716-b76b-3f2941bafb0f" name="Default Changelist" comment="" />
+      <created>1588327692725</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1586165494222</updated>
-      <workItem from="1586165498158" duration="3465000" />
-      <workItem from="1586169884998" duration="15971000" />
-      <workItem from="1586610995466" duration="10308000" />
-      <workItem from="1586681039941" duration="7931000" />
-      <workItem from="1586778592424" duration="17341000" />
-      <workItem from="1586857308537" duration="18299000" />
-      <workItem from="1586937474238" duration="13321000" />
-      <workItem from="1586966559891" duration="2939000" />
-      <workItem from="1587120599382" duration="20754000" />
-      <workItem from="1587215715231" duration="10733000" />
-      <workItem from="1587290506239" duration="18581000" />
-      <workItem from="1587370841917" duration="6470000" />
-      <workItem from="1587379933970" duration="6185000" />
-      <workItem from="1587398032931" duration="4392000" />
-      <workItem from="1587472291950" duration="4811000" />
+      <updated>1588327692725</updated>
+      <workItem from="1588327744839" duration="1252000" />
     </task>
-    <task id="LOCAL-00001" summary="Added file form for uploading users">
-      <created>1586621779141</created>
+    <task id="LOCAL-00001" summary="ready to deploy">
+      <created>1588328301330</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1586621779141</updated>
+      <updated>1588328301330</updated>
     </task>
-    <task id="LOCAL-00002" summary="Created correct form with downloading result list">
-      <created>1586688928560</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1586688928560</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Teacher can add groups">
-      <created>1586859084349</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1586859084349</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Added School Groups handling">
-      <created>1586951934272</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1586951934272</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Added School Groups handling">
-      <created>1587220510113</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1587220510113</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Integrated to frontend">
-      <created>1587297947792</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1587297947792</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added file form for uploading users" />
-    <MESSAGE value="Created correct form with downloading result list" />
-    <MESSAGE value="Teacher can add groups" />
-    <MESSAGE value="Added School Groups handling" />
-    <MESSAGE value="Integrated to frontend" />
-    <option name="LAST_COMMIT_MESSAGE" value="Integrated to frontend" />
+    <MESSAGE value="ready to deploy" />
+    <option name="LAST_COMMIT_MESSAGE" value="ready to deploy" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="549" y="215" width="800" height="675" key="#Updates" timestamp="1586857347910">
+    <state x="631" y="359" width="648" height="388" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588327985125">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="549" y="215" width="800" height="675" key="#Updates/0.28.1920.1052@0.28.1920.1052" timestamp="1586857347910" />
-    <state x="552" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586169928247">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="552" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586169928247" />
-    <state x="690" y="298" width="524" height="500" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1587134781486">
+    <state x="631" y="359" width="648" height="388" key="#com.intellij.fileTypes.FileTypeChooser/0.28.1920.1052@0.28.1920.1052" timestamp="1588327985125" />
+    <state x="489" y="95" width="932" height="915" key="CommitChangelistDialog2" timestamp="1588328301149">
       <screen x="0" y="28" width="1920" height="1052" />
     </state>
-    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586186570115" />
-    <state x="690" y="298" width="524" height="500" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.28.1920.1052@0.28.1920.1052" timestamp="1587134781486" />
-    <state x="489" y="95" width="932" height="915" key="CommitChangelistDialog2" timestamp="1587478110332">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="489" y="95" width="932" height="915" key="CommitChangelistDialog2/0.28.1920.1052@0.28.1920.1052" timestamp="1587478110332" />
-    <state x="100" y="128" width="1720" height="852" key="DiffContextDialog" timestamp="1587126296223">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="100" y="128" width="1720" height="852" key="DiffContextDialog/0.28.1920.1052@0.28.1920.1052" timestamp="1587126296223" />
-    <state width="1872" height="278" key="GridCell.Tab.0.bottom" timestamp="1587478067072">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586189268805" />
-    <state width="1872" height="278" key="GridCell.Tab.0.bottom/0.28.1920.1052@0.28.1920.1052" timestamp="1587478067072" />
-    <state width="1872" height="278" key="GridCell.Tab.0.center" timestamp="1587478067070">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586189268805" />
-    <state width="1872" height="278" key="GridCell.Tab.0.center/0.28.1920.1052@0.28.1920.1052" timestamp="1587478067070" />
-    <state width="1872" height="278" key="GridCell.Tab.0.left" timestamp="1587478067069">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586189268805" />
-    <state width="1872" height="278" key="GridCell.Tab.0.left/0.28.1920.1052@0.28.1920.1052" timestamp="1587478067069" />
-    <state width="1872" height="278" key="GridCell.Tab.0.right" timestamp="1587478067071">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586189268805" />
-    <state width="1872" height="278" key="GridCell.Tab.0.right/0.28.1920.1052@0.28.1920.1052" timestamp="1587478067071" />
-    <state width="1872" height="343" key="GridCell.Tab.1.bottom" timestamp="1587476742626">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1872" height="343" key="GridCell.Tab.1.bottom/0.28.1920.1052@0.28.1920.1052" timestamp="1587476742626" />
-    <state width="1872" height="343" key="GridCell.Tab.1.center" timestamp="1587476742626">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1872" height="343" key="GridCell.Tab.1.center/0.28.1920.1052@0.28.1920.1052" timestamp="1587476742626" />
-    <state width="1872" height="343" key="GridCell.Tab.1.left" timestamp="1587476742626">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1872" height="343" key="GridCell.Tab.1.left/0.28.1920.1052@0.28.1920.1052" timestamp="1587476742626" />
-    <state width="1872" height="343" key="GridCell.Tab.1.right" timestamp="1587476742626">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state width="1872" height="343" key="GridCell.Tab.1.right/0.28.1920.1052@0.28.1920.1052" timestamp="1587476742626" />
-    <state x="461" y="162" key="SettingsEditor" timestamp="1586166696996">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1586166696996" />
-    <state x="555" y="278" width="800" height="549" key="Vcs.Push.Dialog.v2" timestamp="1587297953742">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="555" y="278" width="800" height="549" key="Vcs.Push.Dialog.v2/0.28.1920.1052@0.28.1920.1052" timestamp="1587297953742" />
-    <state x="596" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1587472385719">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="596" y="381" key="com.intellij.ide.util.TipDialog/0.28.1920.1052@0.28.1920.1052" timestamp="1587472385719" />
-    <state x="623" y="256" width="672" height="686" key="search.everywhere.popup" timestamp="1586870216370">
-      <screen x="0" y="28" width="1920" height="1052" />
-    </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1586173715740" />
-    <state x="623" y="256" width="672" height="686" key="search.everywhere.popup/0.28.1920.1052@0.28.1920.1052" timestamp="1586870216370" />
+    <state x="489" y="95" width="932" height="915" key="CommitChangelistDialog2/0.28.1920.1052@0.28.1920.1052" timestamp="1588328301149" />
   </component>
 </project>
