@@ -8,14 +8,15 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from .forms import SignUpRequestForm, FileUploadForm, GroupForm, CreateLectureForm, CommentForm, CreateHomeTask, \
-    QuestionForm, ChoiceForm
+    ChoiceForm, QuestionForm
 from django.views import generic
 import csv
 import secrets
 import string
 
 # Create your views here.
-from .models import SchoolUser, SchoolingGroup, AddToGroupRequest, LectureOrTask, CommentToLectureOrTask, Post, Question
+from .models import SchoolUser, SchoolingGroup, AddToGroupRequest, LectureOrTask, CommentToLectureOrTask, Post, \
+    Question, Choice
 
 
 def change_password(request):
@@ -410,7 +411,7 @@ class PostCreator(generic.View):
         post_school = self.request.user.school
         post_author = self.request.user
         post_group = self.request.POST['dropdown']
-        post_image = self.request.FILES['image']
+        post_files = self.request.FILES.getlist('file')
         post_for_students = False
         post_for_teachers = False
         context = {
@@ -426,15 +427,18 @@ class PostCreator(generic.View):
             for_students=post_for_students, for_teachers=post_for_teachers,
         )
         if post_group != '0':
-            post.group = post_group
-        post.save()
+            post.group = SchoolingGroup.objects.get(pk=post_group)
         file_path = f'files/post{post.id}/'
         os.makedirs(file_path, 0o777)
-        with open(file_path + str(post_image), 'wb+') as file:
-            for chunk in post_image.chunks():
-                file.write(chunk)
+        for post_file in post_files:
+            with open(file_path + str(post_files), 'wb+') as file:
+                for chunk in post_file.chunks():
+                    file.write(chunk)
 
-        return render(self.request, self.template_name, context)
+        post.files = file_path
+        post.save()
+
+        return redirect(self.success_url)
 
 
 class QuestionView(generic.View):
@@ -442,10 +446,34 @@ class QuestionView(generic.View):
 
     def get(self, request, *args, **kwargs):
         context = {
-            'form': self.form_class,
-            'choice': ChoiceForm
+            'question': self.form_class,
+            'choice': ChoiceForm,
+            'groups': SchoolingGroup.objects.filter(school=self.request.user.school)
         }
         return render(self.request, 'poll_creator.html', context)
+
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        question_text = self.request.POST.get('question')
+        poll_for_students = False
+        poll_for_teachers = False
+        poll_group = self.request.POST['dropdown']
+
+        if 'teacher' in self.request.POST:
+            poll_for_teachers = True
+        if 'student' in self.request.POST:
+            poll_for_students = True
+        question = Question(
+            question=question_text, author=user, school=user.school, for_teachers=poll_for_teachers,
+            for_students=poll_for_students)
+        if poll_group != '0':
+            question.group = SchoolingGroup.objects.get(pk=poll_group)
+        question.save()
+        choices = self.request.POST.getlist('choice_text')
+        for choice in choices:
+            new_choice = Choice(question=question, choice_text=choice, votes=0)
+            new_choice.save()
+        return redirect('profile')
 
 
 

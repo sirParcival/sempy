@@ -140,11 +140,16 @@ class Post(models.Model):
     group = models.ForeignKey(SchoolingGroup, on_delete=models.CASCADE, null=True, blank=True)
     for_teachers = models.BooleanField(default=False)
     for_students = models.BooleanField(default=False)
-    images = models.ImageField(null=True, blank=True)
+    files = models.FileField(null=True, blank=True)
 
 
 class Question(models.Model):
     question = models.TextField()
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    author = models.ForeignKey(SchoolUser, on_delete=models.CASCADE)
+    group = models.ForeignKey(SchoolingGroup, on_delete=models.CASCADE, null=True, blank=True)
+    for_teachers = models.BooleanField(default=False)
+    for_students = models.BooleanField(default=False)
 
 
 class Choice(models.Model):
