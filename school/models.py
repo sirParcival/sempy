@@ -146,13 +146,20 @@ class Post(models.Model):
 class Question(models.Model):
     question = models.TextField()
     school = models.ForeignKey(School, on_delete=models.CASCADE)
-    author = models.ForeignKey(SchoolUser, on_delete=models.CASCADE)
+    author = models.CharField(max_length=50)
     group = models.ForeignKey(SchoolingGroup, on_delete=models.CASCADE, null=True, blank=True)
+    users_voted = models.ManyToManyField(SchoolUser, blank=True)
     for_teachers = models.BooleanField(default=False)
     for_students = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.question
 
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=50)
     votes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.choice_text

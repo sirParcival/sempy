@@ -25,7 +25,7 @@ from .views import (
     TaskListView,
     PostCreator,
     QuestionView,
-)
+    News, voting)
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name="home"),
@@ -40,14 +40,16 @@ urlpatterns = [
     path('profile/decline-<int:pk>', decline_request, name='decline'),
     path('profile/delete-<int:pk>/', delete_group, name='delete_group'),
     path('profile/edit-<int:pk>/', edit_group_name, name='edit_group'),
-    path('profile/', ProfileView.as_view(), name='profile'),
+    path('profile/dashboard/', ProfileView.as_view(), name='profile'),
     path('profile/all-groups/', AllGroupsView.as_view(), name='all_groups'),
-    path('profile/create-lecture', LectureCreatorView.as_view(), name='create_lecture'),
-    path('profile/all-lectures', LecturesListView.as_view(), name='list_lectures'),
-    path('profile/lecture-<int:pk>', LectureDetailView.as_view(), name='lecture'),
-    path('profile/create-home-task', HomeTaskCreatorView.as_view(), name='create_home_task'),
-    path('profile/all-tasks', TaskListView.as_view(), name='list_tasks'),
-    path('profile/task-<int:pk>', TaskDetailView.as_view(), name='task'),
-    path('test-post', PostCreator.as_view()),
-    path('test-poll', QuestionView.as_view()),
+    path('profile/create-lecture/', LectureCreatorView.as_view(), name='create_lecture'),
+    path('profile/all-lectures/', LecturesListView.as_view(), name='list_lectures'),
+    path('profile/lecture-<int:pk>/', LectureDetailView.as_view(), name='lecture'),
+    path('profile/create-home-task/', HomeTaskCreatorView.as_view(), name='create_home_task'),
+    path('profile/all-tasks/', TaskListView.as_view(), name='list_tasks'),
+    path('profile/task-<int:pk>/', TaskDetailView.as_view(), name='task'),
+    path('profile/news/', News.as_view(), name="news"),
+    path('test-post/', PostCreator.as_view()),
+    path('test-poll/', QuestionView.as_view()),
+    path('profile/vote/?', voting, name="vote")
 ] + static(settings.FILES_URL, document_root=settings.FILES_ROOT)

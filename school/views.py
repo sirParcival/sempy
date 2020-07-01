@@ -414,9 +414,6 @@ class PostCreator(generic.View):
         post_files = self.request.FILES.getlist('file')
         post_for_students = False
         post_for_teachers = False
-        context = {
-            'groups': SchoolingGroup.objects.filter(school=self.request.user.school)
-        }
         if 'teacher' in self.request.POST:
             post_for_teachers = True
         if 'student' in self.request.POST:
@@ -426,12 +423,14 @@ class PostCreator(generic.View):
             post_title=post_title, post_description=post_description, school=post_school, author=post_author,
             for_students=post_for_students, for_teachers=post_for_teachers,
         )
+
         if post_group != '0':
             post.group = SchoolingGroup.objects.get(pk=post_group)
+        post.save()
         file_path = f'files/post{post.id}/'
         os.makedirs(file_path, 0o777)
         for post_file in post_files:
-            with open(file_path + str(post_files), 'wb+') as file:
+            with open(file_path + str(post_file), 'wb+') as file:
                 for chunk in post_file.chunks():
                     file.write(chunk)
 
@@ -453,7 +452,7 @@ class QuestionView(generic.View):
         return render(self.request, 'poll_creator.html', context)
 
     def post(self, request, *args, **kwargs):
-        user = self.request.user
+        user = self.request.user.first_name + " " + self.request.user.last_name
         question_text = self.request.POST.get('question')
         poll_for_students = False
         poll_for_teachers = False
@@ -464,7 +463,7 @@ class QuestionView(generic.View):
         if 'student' in self.request.POST:
             poll_for_students = True
         question = Question(
-            question=question_text, author=user, school=user.school, for_teachers=poll_for_teachers,
+            question=question_text, author=user, school=self.request.user.school, for_teachers=poll_for_teachers,
             for_students=poll_for_students)
         if poll_group != '0':
             question.group = SchoolingGroup.objects.get(pk=poll_group)
@@ -476,4 +475,44 @@ class QuestionView(generic.View):
         return redirect('profile')
 
 
+class News(generic.View):
+    template_name = 'news.html'
 
+    def get(self, request, *args, **kwargs):
+
+        if self.request.user.is_teacher:
+            posts = Post.objects.filter(school=self.request.user.school).exclude(for_students=True)
+            polls = Question.objects.filter(school=self.request.user.school).exclude(for_students=True)
+        else:
+            posts = Post.objects.filter(school=self.request.user.school).exclude(for_teachers=True)
+            polls = Question.objects.filter(school=self.request.user.school).exclude(for_teachers=True)
+        poll_list = []
+        for poll in polls:
+            choice_list = []
+            choices = Choice.objects.filter(question=poll)
+            for choice in choices:
+                choice_list.append(choice)
+            poll_list.append({
+                'question': poll,
+                'choice': choice_list,
+                'id': poll.id,
+                'users_voted': poll.users_voted.all(),
+            })
+
+        context = {
+            'posts': posts,
+            'polls': polls,
+            'poll_list': poll_list
+        }
+        return render(self.request, self.template_name, context)
+
+
+def voting(request):
+    choice_id = request.GET.get('choice', None)
+    user = request.user
+    choice = Choice.objects.get(pk=choice_id)
+    question = Question.objects.get(pk=choice.question.pk)
+    question.users_voted.add(user)
+    choice.votes += 1
+    choice.save()
+    return JsonResponse({'data': 'print'})
