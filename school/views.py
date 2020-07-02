@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from .forms import SignUpRequestForm, FileUploadForm, GroupForm, CreateLectureForm, CommentForm, CreateHomeTask, \
-    ChoiceForm, QuestionForm
+    ChoiceForm, QuestionForm, CommentPost
 from django.views import generic
 import csv
 import secrets
@@ -16,7 +16,7 @@ import string
 
 # Create your views here.
 from .models import SchoolUser, SchoolingGroup, AddToGroupRequest, LectureOrTask, CommentToLectureOrTask, Post, \
-    Question, Choice
+    Question, Choice, CommentToPost
 
 
 def change_password(request):
@@ -452,7 +452,7 @@ class QuestionView(generic.View):
         return render(self.request, 'poll_creator.html', context)
 
     def post(self, request, *args, **kwargs):
-        user = self.request.user.first_name + " " + self.request.user.last_name
+        user = self.request.user.username
         question_text = self.request.POST.get('question')
         poll_for_students = False
         poll_for_teachers = False
@@ -497,12 +497,12 @@ class News(generic.View):
                 'choice': choice_list,
                 'id': poll.id,
                 'users_voted': poll.users_voted.all(),
+                'author': SchoolUser.objects.get(username=poll.author)
             })
-
         context = {
             'posts': posts,
             'polls': polls,
-            'poll_list': poll_list
+            'poll_list': poll_list,
         }
         return render(self.request, self.template_name, context)
 
@@ -515,4 +515,37 @@ def voting(request):
     question.users_voted.add(user)
     choice.votes += 1
     choice.save()
-    return JsonResponse({'data': 'print'})
+    return JsonResponse({'': ''})
+
+
+class PostDetailedView(generic.View):
+    template_name = 'post.html'
+
+    def get(self, request, *args, **kwargs):
+        post = Post.objects.get(pk=kwargs['pk'])
+        post_files_dir = f'files/post{post.id}/'
+        file_links = []
+        for file in os.listdir(post_files_dir):
+            file_links.append(
+                {
+                    'file_path': post_files_dir + file,
+                    'filename': file
+                }
+            )
+        context = {
+            'post': post,
+            'files': file_links,
+            'comment_form': CommentPost
+        }
+        return render(self.request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        comment = CommentToPost(
+            comment=self.request.POST['comment'],
+            author=self.request.user.first_name + " " + self.request.user.last_name,
+            post=Post.objects.get(id=kwargs['pk'])
+        )
+        comment.save()
+        data.update(comment=comment.comment, name=comment.author)
+        return JsonResponse(data)

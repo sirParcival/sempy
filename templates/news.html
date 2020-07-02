@@ -10,16 +10,21 @@
 {% endblock %}
 
 {% block box-content %}
-    <div class="post_list">
+    <div id="post_list">
         {% for post in posts reversed %}
-            <div class="post_poll">
-                <p class="post_title">{{ post.post_title }}</p>
-                <p class="post_description">{{ post.post_description }}</p>
-            {% if post.files %}
-                <img src="{% static 'img/document.png'%}" width="5%">
+            {% if post.group != None and post.group in user.groups or post.group == None %}
+                <div class="post_poll">
+                <a href="{% url 'post' post.id%}">
+                    <p class="post_title">{{ post.post_title }}</p>
+                </a>
+                    <p class="post_description">{{ post.post_description }}</p>
+                {% if post.files %}
+                    <img src="{% static 'img/document.png'%}" width="5%">
 
 
+                {% endif %}
             {% endif %}
+
 
 
 
@@ -30,28 +35,31 @@
     <div id="poll_list">
             <div class="post_poll">
                 {% for poll in poll_list reversed%}
-                    <br>
-                    <form>
-                    <p>{{ poll.question }}</p>
-                    {% if user in poll.users_voted %}
-                        {% for choice in poll.choice %}
-                            <p>{{ choice.votes }} voted for {{ choice }}</p>
-                    {% endfor %}
-                        {% else %}
-                        {% for choice in poll.choice %}
-                        <label>
-                            <input type="radio" name="choice" value="{{ choice.id }}">
-                            {{ choice }}
-                        </label>
-                    {% endfor %}
+                    {% if poll.group != None and poll.group in user.groups or poll.group == None %}
+                        <br>
+                        <form>
+                        <p>{{ poll.question }}</p>
+                        {% if user in poll.users_voted %}
+                            {% for choice in poll.choice %}
+                                <p>{{ choice.votes }} voted for {{ choice }}</p>
+                        {% endfor %}
+                            {% else %}
+                            {% for choice in poll.choice %}
+                            <label>
+                                <input type="radio" name="choice" value="{{ choice.id }}">
+                                {{ choice }}
+                            </label>
+                        {% endfor %}
 
-                    <input class="vote" type="submit" value="Submit"/>
+                        <input class="vote" type="submit" value="Submit"/>
+                        {% endif %}
+
+
+
+
+                         </form>
                     {% endif %}
 
-
-
-
-                </form>
             {% endfor %}
 
 
@@ -62,7 +70,6 @@
             $("input.vote").click(function (event) {
                 event.preventDefault();
                 const choice = $("input[name=choice]:checked").val();
-                const form = $(this).closest('form');
                 $.ajax({
                     url: '{% url 'vote' %}',
                     type: 'GET',

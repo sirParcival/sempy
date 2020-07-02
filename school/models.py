@@ -163,3 +163,9 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+
+class CommentToPost(models.Model):
+    comment = models.TextField()
+    author = models.CharField(max_length=150)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)

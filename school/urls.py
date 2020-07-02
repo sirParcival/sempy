@@ -25,7 +25,7 @@ from .views import (
     TaskListView,
     PostCreator,
     QuestionView,
-    News, voting)
+    News, voting, PostDetailedView)
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name="home"),
@@ -51,5 +51,6 @@ urlpatterns = [
     path('profile/news/', News.as_view(), name="news"),
     path('test-post/', PostCreator.as_view()),
     path('test-poll/', QuestionView.as_view()),
-    path('profile/vote/?', voting, name="vote")
+    path('profile/vote/', voting, name="vote"),
+    path('profile/post/post_id<int:pk>', PostDetailedView.as_view(), name="post")
 ] + static(settings.FILES_URL, document_root=settings.FILES_ROOT)

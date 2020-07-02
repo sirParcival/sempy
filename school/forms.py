@@ -97,3 +97,9 @@ class ChoiceForm(forms.ModelForm):
     class Meta:
         model = Choice
         fields = ('choice_text',)
+
+
+class CommentPost(forms.ModelForm):
+    class Meta:
+        model = CommentToLectureOrTask
+        fields = ('comment',)
