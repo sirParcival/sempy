@@ -83,6 +83,32 @@ class HomeView(generic.TemplateView):
     template_name = 'index.html'
 
 
+def iterate_over_structure(structure, count, groups, type_of_structure):
+    structure_list = []
+    if type_of_structure == "lecture_or_task":
+        for struct, index in zip(reversed(structure), range(count)):
+            if struct.group in groups or struct.group is None:
+                if struct.is_lecture:
+                    structure_list.append({
+                        'type': 'lecture',
+                        'struct': struct
+                    })
+                else:
+                    structure_list.append({
+                        'type': 'task',
+                        'struct': struct
+                    })
+    else:
+        for struct, index in zip(reversed(structure), range(count)):
+            if struct.group in groups or struct.group is None:
+                structure_list.append({
+                    'type': type_of_structure,
+                    'struct': struct
+                })
+
+    return structure_list
+
+
 class ProfileView(generic.View):
     template_name = 'profile.html'
 
@@ -91,7 +117,37 @@ class ProfileView(generic.View):
             self.request.user.were_logged_in = True
             self.request.user.save()
             return redirect('change_password')
-        return render(self.request, self.template_name)
+
+        else:
+            lectures_and_tasks = LectureOrTask.objects.filter(school=self.request.user.school).exclude(
+                creator=self.request.user
+            )
+            if self.request.user.is_teacher:
+                posts = Post.objects.filter(school=self.request.user.school).exclude(
+                    author=self.request.user, for_students=True
+                )
+                polls = Question.objects.filter(school=self.request.user.school).exclude(
+                    author=self.request.user.username, for_students=True
+                )
+            else:
+                posts = Post.objects.filter(school=self.request.user.school).exclude(
+                    author=self.request.user, for_teachers=True
+                )
+                polls = Question.objects.filter(school=self.request.user.school).exclude(
+                    author=self.request.user.username, for_teachers=True
+                )
+
+            user_groups = self.request.user.groups.all()
+            lectures_and_task_list = iterate_over_structure(lectures_and_tasks, 3, user_groups, 'lecture_or_task')
+            posts_list = iterate_over_structure(posts, 3, user_groups, 'post')
+            polls_list = iterate_over_structure(polls, 3, user_groups, 'poll')
+
+            dashboard_elements = lectures_and_task_list[:] + posts_list[:] + polls_list[:]
+
+            context = {
+                'list': dashboard_elements
+            }
+            return render(self.request, self.template_name, context)
 
 
 class AllGroupsView(generic.View):

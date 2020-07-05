@@ -51,6 +51,20 @@
 			</nav>
 
 		{% block box-content %}
+            {% for l in list %}
+                <div class="dashboard-element">
+                    {% if l.type != 'poll' %}
+                        <a href="{% url l.type l.struct.id%}">{{ l.struct }}</a>
+                    {% else %}
+                        <a href="{% url 'news' %}">{{ l.struct }}</a>
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+
+
 
 		{% endblock %}
 		</div>
