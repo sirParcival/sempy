@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="08869fff-d3d8-4716-b76b-3f2941bafb0f" name="Default Changelist" comment="ready to deploy">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/school/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/school/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/school/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/school/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/school/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/school/migrations/0002_post.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/school/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/school/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/school/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/school/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/school/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/school/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sempy/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/sempy/wsgi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/poll_creator.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/poll_creator.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/post_creator.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post_creator.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/task_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/task_detail.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Ruslan Kossak &lt;rsnlkssk@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1bIls96kkOjEoJUsAU0gGggm8NO" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documents/luggery/luggary-api" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="sempy_dev" type="Python.DjangoServer" factoryName="Django server">
+      <module name="sempy_dev" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="08869fff-d3d8-4716-b76b-3f2941bafb0f" name="Default Changelist" comment="" />
+      <created>1588327692725</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1588327692725</updated>
+      <workItem from="1588327744839" duration="2691000" />
+      <workItem from="1588408583263" duration="2136000" />
+      <workItem from="1588842237858" duration="1982000" />
+      <workItem from="1588860673031" duration="3561000" />
+      <workItem from="1589363871682" duration="551000" />
+      <workItem from="1589456179156" duration="596000" />
+      <workItem from="1591277809231" duration="2132000" />
+      <workItem from="1591366078313" duration="691000" />
+      <workItem from="1592398637630" duration="156000" />
+      <workItem from="1593009555656" duration="2569000" />
+      <workItem from="1593502993725" duration="2056000" />
+    </task>
+    <task id="LOCAL-00001" summary="ready to deploy">
+      <created>1588328301330</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1588328301330</updated>
+    </task>
+    <task id="LOCAL-00002" summary="ready to deploy">
+      <created>1588330926021</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1588330926021</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="ready to deploy" />
+    <option name="LAST_COMMIT_MESSAGE" value="ready to deploy" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="631" y="359" width="648" height="388" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588327985125">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="631" y="359" width="648" height="388" key="#com.intellij.fileTypes.FileTypeChooser/0.28.1920.1052@0.28.1920.1052" timestamp="1588327985125" />
+    <state x="693" y="303" width="524" height="500" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1593503577770">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="693" y="303" width="524" height="500" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.28.1920.1052@0.28.1920.1052" timestamp="1593503577770" />
+    <state x="489" y="95" width="932" height="915" key="CommitChangelistDialog2" timestamp="1593502512590">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="489" y="95" width="932" height="915" key="CommitChangelistDialog2/0.28.1920.1052@0.28.1920.1052" timestamp="1593502512590" />
+    <state x="739" y="312" key="FileChooserDialogImpl" timestamp="1592398793010">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="739" y="312" key="FileChooserDialogImpl/0.28.1920.1052@0.28.1920.1052" timestamp="1592398793010" />
+    <state width="1872" height="278" key="GridCell.Tab.0.bottom" timestamp="1593502514041">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1872" height="278" key="GridCell.Tab.0.bottom/0.28.1920.1052@0.28.1920.1052" timestamp="1593502514041" />
+    <state width="1872" height="278" key="GridCell.Tab.0.center" timestamp="1593502514038">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1872" height="278" key="GridCell.Tab.0.center/0.28.1920.1052@0.28.1920.1052" timestamp="1593502514038" />
+    <state width="1872" height="278" key="GridCell.Tab.0.left" timestamp="1593502514037">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1872" height="278" key="GridCell.Tab.0.left/0.28.1920.1052@0.28.1920.1052" timestamp="1593502514037" />
+    <state width="1872" height="278" key="GridCell.Tab.0.right" timestamp="1593502514040">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1872" height="278" key="GridCell.Tab.0.right/0.28.1920.1052@0.28.1920.1052" timestamp="1593502514040" />
+    <state width="1872" height="343" key="GridCell.Tab.1.bottom" timestamp="1593504212755">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1872" height="343" key="GridCell.Tab.1.bottom/0.28.1920.1052@0.28.1920.1052" timestamp="1593504212755" />
+    <state width="1872" height="343" key="GridCell.Tab.1.center" timestamp="1593504212754">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1872" height="343" key="GridCell.Tab.1.center/0.28.1920.1052@0.28.1920.1052" timestamp="1593504212754" />
+    <state width="1872" height="343" key="GridCell.Tab.1.left" timestamp="1593504212754">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1872" height="343" key="GridCell.Tab.1.left/0.28.1920.1052@0.28.1920.1052" timestamp="1593504212754" />
+    <state width="1872" height="343" key="GridCell.Tab.1.right" timestamp="1593504212754">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state width="1872" height="343" key="GridCell.Tab.1.right/0.28.1920.1052@0.28.1920.1052" timestamp="1593504212754" />
+    <state x="555" y="278" width="800" height="549" key="Vcs.Push.Dialog.v2" timestamp="1593502464945">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="555" y="278" width="800" height="549" key="Vcs.Push.Dialog.v2/0.28.1920.1052@0.28.1920.1052" timestamp="1593502464945" />
+    <state x="596" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1593502994833">
+      <screen x="0" y="28" width="1920" height="1052" />
+    </state>
+    <state x="596" y="381" key="com.intellij.ide.util.TipDialog/0.28.1920.1052@0.28.1920.1052" timestamp="1593502994833" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/school/views.py</url>
+          <line>471</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

@@ -1,0 +1,71 @@
+{% extends 'profile.html' %}
+{% load static %}
+{% block menu %}
+<li class="user-el-menu"><a class="nav-link" href="{% url 'profile' %}">Dashboard</a></li>
+<li class="user-el-menu"><a href="{% url 'list_tasks' %}" class="nav-link">Home tasks</a></li>
+<li class="user-el-menu"><a class="nav-link" href="{% url 'list_lectures'%}">Lectures</a></li>
+<li class="user-el-menu"><a class="nav-link" href="{% url 'news'%}">News</a></li>
+<li class="user-el-menu active"><a href="{% url 'my_groups' %}" class="nav-link">My groups</a></li>
+<li class="user-el-menu"><a href="{% url 'all_groups' %}" class="nav-link">All groups</a></li>
+{% endblock %}
+{% block box-content %}
+{% if user.is_student %}
+
+{% elif user.is_teacher%}
+
+    {% block my_group %}
+        <p>Please make sure you are using only letters or digits and signs "_", "-"</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Add group"/>
+        </form>
+
+    {% endblock %}
+
+    <div class="my_groups">
+        <ul>
+            {% for group_request in group_requests %}
+                    <li class="group_request">{{ group_request }} to {{ group_request.to_group.name }}
+                        <form>
+                            <button class="handle_request" formaction="{% url 'add' group_request.id%}">Accept</button>
+                            <button class="handle_request" formaction="{% url 'decline' group_request.id%}">Decline</button>
+                        </form>
+                    </li>
+
+
+            {% endfor %}
+        </ul>
+
+
+    </div>
+
+
+
+
+{% endif %}
+<div id="user_groups">
+    <ul>
+    {% for group in groups %}
+        <li>
+            <a href="{% url 'group_detailed_view' group.name group.id group.creator.id%}">
+                {{ group }}
+            </a>
+            <form>
+                {% if user.id == group.creator.id %}
+                    <label>
+                        <input type="text" placeholder="New name" name="new_name"/>
+                    </label>
+                    <button class="group_handler" formaction="{% url 'edit_group' group.id%}">Edit</button>
+                    <button class="group_handler" formaction="{% url 'delete_group' group.id%}">Delete</button>
+                {% endif %}
+            </form>
+
+        </li>
+    {% endfor %}
+
+    </ul>
+</div>
+    <script src="{% static 'javascript/group_handler.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'profile.html' %}
+{% load static %}
+{% block menu %}
+    <a href="{% url 'profile' %}" class="nav-link">Back</a>
+{% endblock %}
+
+{% block box-content %}
+    <h3>{{ home_task.title }}</h3>
+    <p>{{ home_task.subject }}</p>
+    <p>{{ home_task.description }}</p>
+    <p>Done to: {{ home_task.date }}</p>
+    <iframe width="560" height="315" src="{{ home_task.link }}" frameborder="0" allow="accelerometer;
+    autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    {% for file in files %}
+        <p><a href="/{{ file.file_path }}" download>{{ file.filename }}</a></p>
+    {% endfor %}
+    <form action="{% url 'task'  home_task.id%}">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <input type="submit" value="Comment" id="comment_submit" >
+    </form>
+
+    <div id="comments">
+        {% for comment in comments %}
+            <p>{{ comment.full_name }}</p>
+            <p>{{ comment.comment }}</p>
+        {% endfor %}
+    </div>
+    <script type="text/javascript">
+        $('#comment_submit').click(function (event) {
+            event.preventDefault();
+            let form = $(this).closest("form");
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                dataType: 'json',
+                success: function (data) {
+                    $('#comments').append('<p>'+data.name+'</p>', '<p>'+data.comment+'</p>');
+                }
+            });
+        });
+    </script>
+
+
+
+{% endblock %}

@@ -1,0 +1,56 @@
+from django.conf.urls import url
+from django.conf.urls.static import static
+from django.urls import path
+from sempy import settings
+from .views import (
+    HomeView,
+    SignUpRequestView,
+    ThanksView,
+    MyGroupsView,
+    FileField,
+    Checkout,
+    change_password,
+    GroupDetail,
+    add_user_to_group,
+    decline_request,
+    delete_group,
+    edit_group_name,
+    ProfileView,
+    AllGroupsView,
+    LectureCreatorView,
+    LecturesListView,
+    LectureDetailView,
+    HomeTaskCreatorView,
+    TaskDetailView,
+    TaskListView,
+    PostCreator,
+    QuestionView,
+    News, voting, PostDetailedView)
+
+urlpatterns = [
+    url(r'^$', HomeView.as_view(), name="home"),
+    path('signup/', SignUpRequestView.as_view(), name="signup"),
+    path('thanks/', ThanksView.as_view(), name="thanks"),
+    path('profile/my-groups', MyGroupsView.as_view(), name="my_groups"),
+    path('profile/upload-users/', FileField.as_view(), name="upload"),
+    path('profile/upload-users/checkout/', Checkout.as_view(), name="checkout"),
+    path('profile/change-password/', change_password, name='change_password'),
+    path('profile/<slug:name>-<int:pk>-<int:creator_id>/', GroupDetail.as_view(), name='group_detailed_view'),
+    path('profile/add-<int:pk>', add_user_to_group, name='add'),
+    path('profile/decline-<int:pk>', decline_request, name='decline'),
+    path('profile/delete-<int:pk>/', delete_group, name='delete_group'),
+    path('profile/edit-<int:pk>/', edit_group_name, name='edit_group'),
+    path('profile/dashboard/', ProfileView.as_view(), name='profile'),
+    path('profile/all-groups/', AllGroupsView.as_view(), name='all_groups'),
+    path('profile/create-lecture/', LectureCreatorView.as_view(), name='create_lecture'),
+    path('profile/all-lectures/', LecturesListView.as_view(), name='list_lectures'),
+    path('profile/lecture-<int:pk>/', LectureDetailView.as_view(), name='lecture'),
+    path('profile/create-home-task/', HomeTaskCreatorView.as_view(), name='create_home_task'),
+    path('profile/all-tasks/', TaskListView.as_view(), name='list_tasks'),
+    path('profile/task-<int:pk>/', TaskDetailView.as_view(), name='task'),
+    path('profile/news/', News.as_view(), name="news"),
+    path('test-post/', PostCreator.as_view()),
+    path('test-poll/', QuestionView.as_view()),
+    path('profile/vote/', voting, name="vote"),
+    path('profile/post/post_id<int:pk>', PostDetailedView.as_view(), name="post")
+] + static(settings.FILES_URL, document_root=settings.FILES_ROOT)

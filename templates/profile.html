@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% block left-nav-bar %}
+        <div class="main-container">
+		<div class="container menu">
+
+			<nav class="navigation-left">
+				<div class="logo">
+					<h2>Sempy</h2>
+				</div>
+				<div class="user-block-menu">
+					<ul class="user-menu">
+                        {% block menu %}
+                        <li class="user-el-menu active"><a class="nav-link" href="{% url 'profile' %}">Dashboard</a></li>
+                        <li class="user-el-menu"><a href="{% url 'list_tasks' %}" class="nav-link">Home tasks</a></li>
+                        <li class="user-el-menu"><a class="nav-link" href="{% url 'list_lectures'%}">Lectures</a></li>
+                        <li class="user-el-menu"><a class="nav-link" href="{% url 'news'%}">News</a></li>
+                        <li class="user-el-menu"><a href="{% url 'my_groups' %}" class="nav-link">My groups</a></li>
+                        <li class="user-el-menu"><a href="{% url 'all_groups' %}" class="nav-link">All groups</a></li>
+                        {% endblock %}
+
+					</ul>
+				</div>
+			</nav>
+		</div>
+
+
+		<div class="container main">
+			<nav class="navigation-top">
+				<div class="user-account-info">
+                {% if user.is_teacher %}
+                <button><a href="{% url 'create_lecture' %}">Add new lecture</a></button>
+                    <button><a href="{% url 'create_home_task' %}">Add new home task</a></button>
+                {% endif %}
+
+					<ul class="user-info-list">
+						<li><p>{{user.first_name}}</p></li>
+						<li>{{ user.last_name }}</li>
+						<li>avatar</li>
+                        {% if user.is_headteacher %}
+                            <li><a href="{% url 'upload' %}">Add</a></li>
+                        {% endif %}
+
+					</ul>
+				</div>
+			</nav>
+
+		{% block box-content %}
+            {% for l in list %}
+                <div class="dashboard-element">
+                    {% if l.type != 'poll' %}
+                        <a href="{% url l.type l.struct.id%}">{{ l.struct }}</a>
+                    {% else %}
+                        <a href="{% url 'news' %}">{{ l.struct }}</a>
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+
+
+
+		{% endblock %}
+		</div>
+	</div>
+    {% endblock %}
+{% endblock %}

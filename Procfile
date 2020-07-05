@@ -1,0 +1,1 @@
+web: gunicorn sempy.wsgi --log-file -

@@ -1,0 +1,45 @@
+{% extends 'profile.html' %}
+{% block box-content %}
+    {% load static %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>
+            <label for="id_title">
+                <input type="text" placeholder="Title" id="id_title" name="title" required>
+            </label>
+        </p>
+        <p>
+            <label for="id_description">
+                <input type="text" placeholder="Description" id="id_description" name="description" maxlength="1000">
+            </label>
+        </p>
+        <input type="file" name="file" multiple>
+        <p>
+            <label for="select_group">
+                <select name="dropdown" id="select_group">
+                    <option value="0" ></option>
+                        {% for group in groups %}
+                            <option value="{{ group.id }}">{{ group }}</option>
+                        {% endfor %}
+                </select>
+            </label>
+        </p>
+        <p>
+            {% if user.is_teacher %}
+                <label for="id_teacher">
+                    Teacher
+                    <input type="radio" name="teacher" id="id_teacher">
+                </label>
+            {% else %}
+                   <label for="id_teacher">
+                    Student
+                    <input type="radio" name="student" id="id_student">
+                </label>
+            {% endif %}
+        </p>
+        <input type="submit" value="Post"/>
+    </form>
+
+    <script src="{% static 'javascript/lecture_handler.js' %}"></script>
+{% endblock %}
