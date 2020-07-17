@@ -22,7 +22,7 @@ from .models import SchoolUser, SchoolingGroup, AddToGroupRequest, LectureOrTask
 def check_login(func):
     def wrapper(*args, **kwargs):
         if args[0].request.user.is_authenticated:
-            func()
+            return func(self=args[0], request=args[1], **kwargs)
         else:
             return redirect('login')
 
@@ -194,7 +194,6 @@ class GroupDetail(generic.View):
         }
         return render(request, 'group.html', context)
 
-    @check_login
     def post(self, request, *args, **kwargs):
         new_request = AddToGroupRequest.objects.create(
             full_name=f'{self.request.user.first_name} {self.request.user.last_name}',
@@ -220,7 +219,6 @@ class MyGroupsView(generic.View):
             context['group_requests'] = group_request
         return render(request, 'my_groups.html', context)
 
-    @check_login
     def post(self, request, *args, **kwargs):
         if self.request.POST['name']:
             group_name = self.request.POST['name']
