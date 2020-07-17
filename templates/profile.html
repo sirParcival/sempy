@@ -4,7 +4,9 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% endblock %}
 
-{% block content %}
+{% block auth %}
+    {% if user.is_authenticated %}
+        {% block content %}
     {% block left-nav-bar %}
         <div class="main-container">
 		<div class="container menu">
@@ -70,4 +72,9 @@
 		</div>
 	</div>
     {% endblock %}
+{% endblock %}
+        {% else %}
+        <h2>Please <a href="{% url 'login' %}">log in</a> first</h2>
+    {% endif %} 
+
 {% endblock %}

@@ -19,6 +19,17 @@ from .models import SchoolUser, SchoolingGroup, AddToGroupRequest, LectureOrTask
     Question, Choice, CommentToPost
 
 
+def check_login(func):
+    def wrapper(*args, **kwargs):
+        if args[0].request.user.is_authenticated:
+            func()
+        else:
+            return redirect('login')
+
+    return wrapper
+
+
+@check_login
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -112,6 +123,7 @@ def iterate_over_structure(structure, count, groups, type_of_structure):
 class ProfileView(generic.View):
     template_name = 'profile.html'
 
+    @check_login
     def get(self, request, *args, **kwargs):
         if not self.request.user.were_logged_in:
             self.request.user.were_logged_in = True
@@ -151,6 +163,7 @@ class ProfileView(generic.View):
 
 
 class AllGroupsView(generic.View):
+    @check_login
     def get(self, request, *args, **kwargs):
         all_groups = SchoolingGroup.objects.filter(school=self.request.user.school)
         context = {
@@ -172,6 +185,7 @@ class ThanksView(generic.TemplateView):
 class GroupDetail(generic.View):
     school_users = SchoolUser.objects.all()
 
+    @check_login
     def get(self, request, *args, **kwargs):
         users = self.school_users.filter(groups=kwargs['pk'])
         context = {
@@ -180,6 +194,7 @@ class GroupDetail(generic.View):
         }
         return render(request, 'group.html', context)
 
+    @check_login
     def post(self, request, *args, **kwargs):
         new_request = AddToGroupRequest.objects.create(
             full_name=f'{self.request.user.first_name} {self.request.user.last_name}',
@@ -194,6 +209,7 @@ class GroupDetail(generic.View):
 class MyGroupsView(generic.View):
     form_class = GroupForm
 
+    @check_login
     def get(self, request, *args, **kwargs):
         group_request = AddToGroupRequest.objects.filter(to_user=self.request.user)
         context = {
@@ -204,6 +220,7 @@ class MyGroupsView(generic.View):
             context['group_requests'] = group_request
         return render(request, 'my_groups.html', context)
 
+    @check_login
     def post(self, request, *args, **kwargs):
         if self.request.POST['name']:
             group_name = self.request.POST['name']
@@ -226,6 +243,7 @@ class FileField(generic.FormView):
     success_url = reverse_lazy('checkout')
     template_name = 'upload_users.html'
 
+    @check_login
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
@@ -253,6 +271,7 @@ def gen_username(first_name, last_name):
 
 
 class Checkout(generic.CreateView):
+    @check_login
     def get(self, request, *args, **kwargs):
         with open('files/generated_for_{}.csv'.format(self.request.user.username)) as csv_file:
             with open('files/result_for_{}.csv'.format(self.request.user.username), mode='w') as result_file:
@@ -293,6 +312,7 @@ class Checkout(generic.CreateView):
 class LectureCreatorView(generic.View):
     template_name = 'lecture_creator.html'
 
+    @check_login
     def get(self, request, *args, **kwargs):
         form = CreateLectureForm()
         context = {
@@ -301,6 +321,7 @@ class LectureCreatorView(generic.View):
         }
         return render(self.request, self.template_name, context)
 
+    @check_login
     def post(self, request, *args, **kwargs):
         lecture_title = self.request.POST.get('title')
         lecture_description = self.request.POST.get('description')
@@ -328,6 +349,7 @@ class LectureCreatorView(generic.View):
 
 
 class LecturesListView(generic.View):
+    @check_login
     def get(self, request, *args, **kwargs):
         context = {
             'lectures': LectureOrTask.objects.filter(school=self.request.user.school, is_lecture=True),
@@ -337,6 +359,7 @@ class LecturesListView(generic.View):
 
 
 class LectureDetailView(generic.View):
+    @check_login
     def get(self, request, *args, **kwargs):
         filelinks = []
         lecture = LectureOrTask.objects.get(id=kwargs['pk'])
@@ -373,6 +396,7 @@ class LectureDetailView(generic.View):
 class HomeTaskCreatorView(generic.View):
     template_name = 'home_task_creator.html'
 
+    @check_login
     def get(self, request, *args, **kwargs):
         form = CreateHomeTask()
         context = {
@@ -409,6 +433,7 @@ class HomeTaskCreatorView(generic.View):
 
 
 class TaskListView(generic.View):
+    @check_login
     def get(self, request, *args, **kwargs):
         context = {
             'tasks': LectureOrTask.objects.filter(school=self.request.user.school, is_lecture=False),
@@ -418,6 +443,7 @@ class TaskListView(generic.View):
 
 
 class TaskDetailView(generic.View):
+    @check_login
     def get(self, request, *args, **kwargs):
         filelinks = []
         home_task = LectureOrTask.objects.get(id=kwargs['pk'])
@@ -455,6 +481,7 @@ class PostCreator(generic.View):
     template_name = 'post_creator.html'
     success_url = 'profile'
 
+    @check_login
     def get(self, request, *args, **kwargs):
         context = {
             'groups': SchoolingGroup.objects.filter(school=self.request.user.school)
@@ -499,6 +526,7 @@ class PostCreator(generic.View):
 class QuestionView(generic.View):
     form_class = QuestionForm
 
+    @check_login
     def get(self, request, *args, **kwargs):
         context = {
             'question': self.form_class,
@@ -534,6 +562,7 @@ class QuestionView(generic.View):
 class News(generic.View):
     template_name = 'news.html'
 
+    @check_login
     def get(self, request, *args, **kwargs):
 
         if self.request.user.is_teacher:
@@ -577,6 +606,7 @@ def voting(request):
 class PostDetailedView(generic.View):
     template_name = 'post.html'
 
+    @check_login
     def get(self, request, *args, **kwargs):
         post = Post.objects.get(pk=kwargs['pk'])
         post_files_dir = f'files/post{post.id}/'
